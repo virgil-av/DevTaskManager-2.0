@@ -1,0 +1,100 @@
+ <div class="add-project">
+    <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#addProject">
+      <i class="glyphicon glyphicon-plus"></i>
+      Add project
+    </button>
+ </div>
+
+<div class="container-fluid">
+  <div class="spacer"></div>
+
+  <div class="row" *ngIf="allProjects">
+    <div *ngFor="let p of allProjects">
+      <div class="col-md-3">
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title text-center">{{p.projectName}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="row text-center">
+              <i class="fa fa-square fa-5x" [ngStyle]="{color: p.colorId}"></i>
+            </div>
+
+            <div class="container-custom">
+              <div class="row border-top"><span class="pull-left">Tasks</span><span class="pull-right">0</span></div>
+              <div class="row border-top"><span class="pull-left">Team</span><span class="pull-right">0</span></div>
+              <div class="row border-top"><span class="pull-left">Status</span><span class="pull-right">
+                <span class="label label-default">New</span>
+                <span class="label label-primary">In progress</span>
+                <span class="label label-success">Completed</span>
+              </span></div>
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--ADD PROJECT MODAL-->
+
+ <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="addProjectLabel">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title" id="addProjectLabel">Add a New Project</h4>
+       </div>
+       <div class="modal-body">
+         <form [formGroup]="formAddProject" (ngSubmit)="addNewProject()">
+           <div>
+             <div class="form-group" [class.has-error]="formAddProject.invalid && !formAddProject.pristine">
+               <label>Project Name<span class="text-danger">*</span></label>
+               <input type="text" class="form-control" formControlName="projectName">
+               <span *ngIf="formAddProject.controls.projectName.dirty && (formAddProject.controls.projectName.errors != null)">Maximum number of characters reached [40].</span>
+             </div>
+             <div class="form-group">
+               <label>Description</label>
+               <textarea class="form-control" formControlName="description"></textarea>
+             </div>
+           </div>
+         </form>
+       </div>
+       <div class="modal-footer">
+         <div class="pull-left"><span class="text-danger">* Required</span></div>
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <button [disabled]="formAddProject.invalid" (click)="addNewProject()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
+           <span *ngIf="isLoading === false">Add Project</span>
+           <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
+         </button>
+       </div>
+     </div>
+   </div>
+ </div>

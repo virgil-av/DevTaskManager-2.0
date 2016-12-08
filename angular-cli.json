@@ -18,9 +18,16 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../bower_components/bootstrap/dist/css/bootstrap.css",
+        "../bower_components/components-font-awesome/css/font-awesome.min.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../bower_components/jquery/dist/jquery.js",
+        "../bower_components/bootstrap/dist/js/bootstrap.js",
+        "../bower_components/auth0-lock/build/lock.js"
+
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
@@ -28,7 +35,9 @@
       }
     }
   ],
-  "addons": [],
+  "addons": [
+    "../bower_components/components-font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+  ],
   "packages": [],
   "e2e": {
     "protractor": {

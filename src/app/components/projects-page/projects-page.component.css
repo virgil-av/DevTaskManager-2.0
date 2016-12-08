@@ -1,0 +1,31 @@
+.add-project{
+  background-color: #fff;
+  padding: 5px 0px 5px 50px;
+  min-height: 40px;
+  box-shadow: 0px 1px 1px #888888;
+}
+
+.container-fluid{
+  background-color: #eaeff5;
+}
+
+.spacer{
+  min-height: 10px;
+}
+
+.button-minwidth{
+  min-width: 85.58px;
+}
+
+.border-top{
+  border-top: 1px solid #cccccc;
+}
+
+
+.container-custom {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
