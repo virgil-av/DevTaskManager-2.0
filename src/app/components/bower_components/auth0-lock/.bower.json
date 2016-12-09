@@ -1,0 +1,31 @@
+{
+  "name": "auth0-lock",
+  "version": "10.7.2",
+  "main": "build/lock.js",
+  "ignore": [
+    "lib-cov",
+    "*.seed",
+    "*.log",
+    "*.csv",
+    "*.dat",
+    "*.out",
+    "*.pid",
+    "*.gz",
+    "pids",
+    "logs",
+    "results",
+    "npm-debug.log",
+    "bin"
+  ],
+  "homepage": "https://github.com/auth0/lock",
+  "_release": "10.7.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v10.7.2",
+    "commit": "af6e7679430efe359b98fbacff18783ba2d5e899"
+  },
+  "_source": "https://github.com/auth0/lock.git",
+  "_target": "^10.7.2",
+  "_originalSource": "auth0-lock",
+  "_direct": true
+}

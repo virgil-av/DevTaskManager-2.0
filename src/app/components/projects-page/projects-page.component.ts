@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatabaseService} from "../../services/database.service";
-const uniqid: any = require('uniqid');
+import {ParentChildrenService} from "../../services/parent-children.service";
+import {Router} from "@angular/router";
 
 declare let $:any;
 
@@ -20,14 +21,14 @@ export class ProjectsPageComponent implements OnInit {
   allProjects: any[];
 
 
-  constructor(private formBuilder: FormBuilder, private db: DatabaseService) {
+  constructor(private formBuilder: FormBuilder, private db: DatabaseService, private pcService: ParentChildrenService, private router: Router) {
 
     this.formAddProject = formBuilder.group({
       "projectName": ['',[Validators.required,Validators.maxLength(40)]],
       "creationDate": new Date(),
       "colorId": this.getRandomColor(),
       "description": [''],
-      "id": this.generateUniqueId()
+      "id": this.db.generateUniqueId()
 
     })
 
@@ -36,10 +37,12 @@ export class ProjectsPageComponent implements OnInit {
   ngOnInit() {
     this.db.getAllProjects().subscribe(response =>{
       this.allProjects = response;
+      this.pcService.sendProjectsList(response);
       console.log(response);
     },
       error => this.anyErrors = error
     )
+
 
   }
 
@@ -53,7 +56,7 @@ export class ProjectsPageComponent implements OnInit {
         this.allProjects.push(response);
 
           this.formAddProject.reset({
-            "id": this.generateUniqueId(),
+            "id": this.db.generateUniqueId(),
             "creationDate": new Date(),
             "colorId": this.getRandomColor(),
             "projectName": '',
@@ -62,21 +65,24 @@ export class ProjectsPageComponent implements OnInit {
 
           this.isLoading = false;
 
+          this.pcService.sendProjectsList(this.allProjects);
+
           $('#addProject').modal('hide'); //closes modal window on submission complete
 
         },
         error => this.anyErrors = error);
     },
       error => this.anyErrors = error
-    )
-
-    console.log(this.formAddProject)
+    );
 
   }
 
-  generateUniqueId(){
-    return uniqid() + 'av' + (Math.floor((Math.random() * 10000000) + 1)).toString(16);
+
+  navigateToProject(id){
+    this.router.navigate(['project-detail/' + id])
   }
+
+
 
   getRandomColor() {
     let letters = '0123456789ABCDEF';

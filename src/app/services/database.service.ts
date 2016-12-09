@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers} from "@angular/http";
-import {dbSettings} from '../dependencies/database.config'
+import {dbSettings} from '../dependencies/database.config';
+const uniqid: any = require('uniqid');
 
 import 'rxjs/add/operator/map'
 
@@ -25,11 +26,19 @@ export class DatabaseService {
   }
 
 
-
-
   getAllProjects(){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbList)
       .map(response => response.json());
+  }
+
+  getSingleProject(id: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + id)
+      .map(response => response.json());
+  }
+
+
+  generateUniqueId(){
+    return uniqid() + 'av' + (Math.floor((Math.random() * 10000000) + 1)).toString(16);
   }
 
 

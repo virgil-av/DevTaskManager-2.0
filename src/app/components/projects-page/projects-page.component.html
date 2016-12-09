@@ -12,9 +12,9 @@
     <div *ngFor="let p of allProjects">
       <div class="col-md-3">
 
-        <div class="panel panel-primary">
+        <div class="panel panel-default" (click)="navigateToProject(p.id)">
           <div class="panel-heading">
-            <h3 class="panel-title text-center">{{p.projectName}}</h3>
+            <h3 class="panel-title text-center">{{p.projectName | capitalize}}</h3>
           </div>
           <div class="panel-body">
             <div class="row text-center">
@@ -22,6 +22,7 @@
             </div>
 
             <div class="container-custom">
+              <div class="row border-top"><span class="pull-left">Created On:</span><span class="pull-right">{{p.creationDate | date:'medium'}}</span></div>
               <div class="row border-top"><span class="pull-left">Tasks</span><span class="pull-right">0</span></div>
               <div class="row border-top"><span class="pull-left">Team</span><span class="pull-right">0</span></div>
               <div class="row border-top"><span class="pull-left">Status</span><span class="pull-right">

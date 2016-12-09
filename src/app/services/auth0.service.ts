@@ -79,6 +79,12 @@ export class Auth{
     }
   }
 
+  public profilePic(){
+    if(this.userProfile && this.userProfile.user_metadata && this.userProfile.user_metadata.user_avatar){
+      return this.userProfile.user_metadata.user_avatar
+    }
+  }
+
 
 
 }

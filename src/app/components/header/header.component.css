@@ -1,3 +1,10 @@
 .navbar{
   margin-bottom:0;
 }
+
+.profile-image{
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  margin-right: 5px;
+}

@@ -12,6 +12,10 @@ import { HeaderComponent } from './components/header/header.component';
 import {Auth} from "./services/auth0.service";
 import {DatabaseService} from "./services/database.service";
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import {ParentChildrenService} from "./services/parent-children.service";
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { ProjectDetailPageComponent } from './components/project-detail-page/project-detail-page.component';
+import { SubstringPipe } from './pipes/substring.pipe';
 
 
 @NgModule({
@@ -21,6 +25,9 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     ProjectsPageComponent,
     HeaderComponent,
     LoadingSpinnerComponent,
+    CapitalizePipe,
+    ProjectDetailPageComponent,
+    SubstringPipe,
 
   ],
   imports: [
@@ -30,7 +37,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     HttpModule,
     AppRouting
   ],
-  providers: [AUTH_PROVIDERS, Auth, DatabaseService],
+  providers: [AUTH_PROVIDERS, Auth, DatabaseService, ParentChildrenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
