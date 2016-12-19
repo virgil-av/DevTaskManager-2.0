@@ -25,6 +25,13 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
+  createNewTask(body: any, id: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + id,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
 
   getAllProjects(){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbList)
@@ -32,9 +39,25 @@ export class DatabaseService {
   }
 
   getSingleProject(id: string){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + id)
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbList + "/" + id)
       .map(response => response.json());
   }
+
+  getCategory(){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbCategory)
+      .map(response => response.json());
+  }
+
+  getUsers(){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbUsers)
+      .map(response => response.json());
+  }
+
+  getTasks(id){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + id + '/tasks')
+      .map(response => response.json());
+  }
+
 
 
   generateUniqueId(){

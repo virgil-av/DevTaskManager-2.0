@@ -31,10 +31,10 @@ export class Auth{
       localStorage.setItem('id_token', authResult.idToken);
 
       // Fetch profile information
-      this.lock.getProfile(authResult.idToken, (error, profile) => {
+      this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
         if (error) {
           // Handle error
-          alert(error);
+          alert(`Auth service 2: ${error}`);
           return;
         }
 
@@ -43,7 +43,11 @@ export class Auth{
 
       });
 
-      setTimeout(() => { this.router.navigate(['/projects']) }, 500);
+      if(this.loggedUser()){
+
+      }
+
+      setTimeout(() => { this.router.navigate(['/projects']) }, 1500);
     });
 
   };

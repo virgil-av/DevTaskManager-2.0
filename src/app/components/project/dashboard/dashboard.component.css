@@ -1,0 +1,10 @@
+.separator{
+  margin: 10px 1px 10px 1px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.panel-custom{
+  min-height: 220px;
+}
+
+

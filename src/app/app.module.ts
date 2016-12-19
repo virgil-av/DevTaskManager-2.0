@@ -14,8 +14,18 @@ import {DatabaseService} from "./services/database.service";
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import {ParentChildrenService} from "./services/parent-children.service";
 import { CapitalizePipe } from './pipes/capitalize.pipe';
-import { ProjectDetailPageComponent } from './components/project-detail-page/project-detail-page.component';
 import { SubstringPipe } from './pipes/substring.pipe';
+import { ProjectComponent } from './components/project/project.component';
+import { DashboardComponent } from './components/project/dashboard/dashboard.component';
+import { TasksComponent } from './components/project/tasks/tasks.component';
+import {DragulaModule} from "ng2-dragula/ng2-dragula";
+import { TableSortingPipe } from './pipes/table-sorting.pipe';
+import {Ng2PaginationModule} from 'ng2-pagination';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
+import { AddTaskComponent } from './components/project/tasks/add-task/add-task.component';
+import { NameInitialsPipe } from './pipes/name-initials.pipe';
+import { EditTaskComponent } from './components/project/tasks/edit-task/edit-task.component';
+
 
 
 @NgModule({
@@ -26,8 +36,15 @@ import { SubstringPipe } from './pipes/substring.pipe';
     HeaderComponent,
     LoadingSpinnerComponent,
     CapitalizePipe,
-    ProjectDetailPageComponent,
     SubstringPipe,
+    ProjectComponent,
+    DashboardComponent,
+    TasksComponent,
+    TableSortingPipe,
+    TimeAgoPipe,
+    AddTaskComponent,
+    NameInitialsPipe,
+    EditTaskComponent,
 
   ],
   imports: [
@@ -35,7 +52,9 @@ import { SubstringPipe } from './pipes/substring.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRouting
+    AppRouting,
+    DragulaModule,
+    Ng2PaginationModule
   ],
   providers: [AUTH_PROVIDERS, Auth, DatabaseService, ParentChildrenService],
   bootstrap: [AppComponent]

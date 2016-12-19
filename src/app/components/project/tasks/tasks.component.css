@@ -1,0 +1,202 @@
+.inner-page-wrapper{
+  background: #ffffff;
+  height: calc(100vh - 145px);
+  max-height: calc(100vh - 145px);
+  max-width: 100%;
+  border: 1px solid #d2ddeb;
+  border-top: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.inner-page-wrapper::-webkit-scrollbar {
+  -webkit-appearance: none;
+  height: 7px;
+  background: #dfe5ed;
+  border-radius: 0
+}
+.inner-page-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #b2c4db
+}
+
+
+
+th{ resize: horizontal; overflow: auto; }
+
+
+
+.glyphicon.glyphicon-option-vertical.dropdown-toggle:hover{
+  color: orange;
+}
+
+.glyphicon{
+  cursor: pointer;
+}
+
+
+.stack-arrows{
+  font-size: 10px;
+  width: 15px;
+  padding: 0 0 0 0;
+}
+
+.dropup .dropdown-menu,
+.navbar-fixed-bottom .dropdown .dropdown-menu {
+  top: -35px;
+  bottom: auto;
+  left: 25px;
+  right: auto;
+  margin-bottom: 2px;
+
+  width: 175px;
+  padding: 10px 6px 10px 6px;
+
+  background: linear-gradient(#333, #222);
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+
+}
+
+.dropdown-menu:after {
+  content: " ";
+  border-right: 15px solid #222;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  position: absolute;
+  top: 37px;
+  left: -15px;
+}
+
+a.active {
+  transform: rotate(135deg);
+  transition: transform 0.5s;
+}
+
+a{
+  cursor: pointer;
+}
+
+.fa{
+  cursor: pointer;
+}
+
+/*styles for sorting arrow*/
+
+.table-sort{
+  cursor: pointer;
+  position: relative;
+  background-image: none;
+  white-space: nowrap;
+}
+
+.table-sort:after{
+  font-family: FontAwesome;
+  padding-left: 5px;
+}
+
+.table-sort.default-arrow:after{
+  content: "\f0dc";
+  color: #ddd;
+}
+
+.table-sort.sort-asc:after{
+  content: "\f0de";
+  color: #767676;
+}
+
+.table-sort.sort-desc:after{
+  content: "\f0dd";
+  color: #767676;
+}
+
+
+
+/*Styles for highlighting tasks*/
+
+.completed{
+  background-color: #26c281;
+  color: white;
+}
+
+.workingonit{
+  background-color: #3598dc;
+  color: white;
+}
+
+.testing{
+  background-color: #8877a9;
+  color: white;
+}
+
+.forlater{
+  background-color: #c49f47;
+  color: white;
+}
+
+.inqueue{
+  background-color: #e87e04;
+  color: white;
+}
+
+.explainingrequired{
+  background-color: #e64759;
+  color: white;
+}
+
+
+.priority-low:before{
+  font-family: FontAwesome;
+  content: "\f111";
+  color: #cccccc;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+.priority-normal:before{
+  font-family: FontAwesome;
+  content: "\f111";
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.priority-important:before{
+  font-family: FontAwesome;
+  content: "\f111";
+  color: #ffff00;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+
+.priority-urgent:before{
+  font-family: FontAwesome;
+  content: "\f071";
+  color: #cd5c5c;
+  background-color: #ffffff;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.priority-critical:before{
+  font-family: FontAwesome;
+  content: "\f06a";
+  color: #ff0000;
+  background-color: #ffffff;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+pagination-controls /deep/ .ng2-pagination span {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+pagination-controls /deep/ .ng2-pagination span:hover {
+  font-size: 12px;
+  cursor: pointer;
+  color: #cccccc;
+  font-weight: bold;
+}

@@ -22,8 +22,9 @@
             Projects <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" *ngIf="listOfProjects">
+            <li><a routerLink="/project">Project</a></li>
             <li><a routerLink="/projects" routerLinkActive="active"><i class="fa fa-square-o fa-lg"></i>&nbsp;All Projects</a></li>
-            <li *ngFor="let p of listOfProjects"><a routerLink="/project-detail/{{p.id}}"><i class="fa fa-square fa-lg" [ngStyle]="{color: p.colorId}"></i>&nbsp;{{p.projectName
+            <li *ngFor="let p of listOfProjects"><a routerLink="/project/{{p.id}}/dashboard"><i class="fa fa-square fa-lg" [ngStyle]="{color: p.colorId}"></i>&nbsp;{{p.projectName
               | capitalize}}</a></li>
           </ul>
         </li>

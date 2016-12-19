@@ -38,7 +38,6 @@ export class ProjectsPageComponent implements OnInit {
     this.db.getAllProjects().subscribe(response =>{
       this.allProjects = response;
       this.pcService.sendProjectsList(response);
-      console.log(response);
     },
       error => this.anyErrors = error
     )
@@ -79,7 +78,7 @@ export class ProjectsPageComponent implements OnInit {
 
 
   navigateToProject(id){
-    this.router.navigate(['project-detail/' + id])
+    this.router.navigate(['project/' + id + "/dashboard"])
   }
 
 

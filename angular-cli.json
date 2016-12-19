@@ -20,7 +20,8 @@
       "styles": [
         "styles.css",
         "../bower_components/bootstrap/dist/css/bootstrap.css",
-        "../bower_components/components-font-awesome/css/font-awesome.min.css"
+        "../bower_components/components-font-awesome/css/font-awesome.min.css",
+        "../bower_components/dragula.js/dist/dragula.min.css"
       ],
       "scripts": [
         "../bower_components/jquery/dist/jquery.js",

@@ -1,0 +1,52 @@
+<div class="inner-page-wrapper">
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <div class='wrapper-t'>
+
+        <div class='drag-container' *ngIf="task">
+
+          <div class="inside-container" id="col1" [dragula]='task.id' [dragulaModel]='many'>
+            <div class="well" *ngFor='let text of many'>{{text}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class='wrapper-t'>
+
+        <div class='drag-container' *ngIf="task">
+
+          <div class="inside-container" id="col2" [dragula]='task.id' [dragulaModel]='many2'>
+            <div class="well" *ngFor='let text of many2'>{{text}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class='wrapper-t'>
+
+        <div class='drag-container' *ngIf="task">
+
+          <div class="inside-container" id="col3" [dragula]='task.id' [dragulaModel]='many3'>
+            <div class="well" *ngFor='let text of many3'>{{text}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+</div>
+
+

@@ -1,0 +1,171 @@
+<div class="inner-page-wrapper">
+
+
+  <div *ngIf="!anyErrors">
+    <table class="table table-bordered table-condensed">
+      <thead>
+      <tr>
+        <th></th>
+        <th width="35%">Title <span class="table-sort default-arrow"
+                                    [class.sort-asc]="sortBy == '+title'"
+                                    [class.sort-desc]="sortBy == '-title'"
+                                    (click)="sort('title')">
+      </span></th>
+
+        <th>Date <span class="table-sort default-arrow"
+                       [class.sort-asc]="sortBy == '+date'"
+                       [class.sort-desc]="sortBy == '-date'"
+                       (click)="sort('date')">
+      </span></th>
+
+        <th>Category <span class="table-sort default-arrow"
+                           [class.sort-asc]="sortBy == '+category'"
+                           [class.sort-desc]="sortBy == '-category'"
+                           (click)="sort('category')">
+      </span></th>
+
+        <th>Created By <span class="table-sort default-arrow"
+                             [class.sort-asc]="sortBy == '+author'"
+                             [class.sort-desc]="sortBy == '-author'"
+                             (click)="sort('author')">
+      </span></th>
+
+        <th>Assignee <span class="table-sort default-arrow"
+                           [class.sort-asc]="sortBy == '+assignee'"
+                           [class.sort-desc]="sortBy == '-assignee'"
+                           (click)="sort('assignee')">
+      </span></th>
+
+        <th>Status <span class="table-sort default-arrow"
+                         [class.sort-asc]="sortBy == '+status'"
+                         [class.sort-desc]="sortBy == '-status'"
+                         (click)="sort('status')">
+      </span></th>
+
+        <th>Testing Status</th>
+
+        <th>Priority <span class="table-sort default-arrow"
+                           [class.sort-asc]="sortBy == '+priority'"
+                           [class.sort-desc]="sortBy == '-priority'"
+                           (click)="sort('priority')">
+      </span></th>
+
+        <th>D</th>
+        <th>C</th>
+      </tr>
+
+      <tr *ngIf="isLoading == true">
+        <td colspan="11">
+          <loading-spinner [visible]="isLoading"></loading-spinner>
+        </td>
+      </tr>
+      </thead>
+      <tbody>
+      <!--ROW SETUP, filter is for search, orderBy is for column sort, paginate is for pagination-->
+      <tr
+        *ngFor="let task of tasks | tableSorting:[sortBy] | paginate: { itemsPerPage: rowsPerPage, currentPage: p }"
+
+        [ngClass]="{
+      completed: task.status == 'Completed',
+      workingonit: task.status == 'Working on It',
+      forlater: task.status == 'For Later',
+      testing: task.status == 'Testing',
+      inqueue: task.status == 'In Queue',
+      explainingrequired: task.status == 'Explaining Required'
+      }">
+        <!--ROW SETUP END-->
+        <td>
+
+          <!--ROW MENU-->
+          <div class="dropup">
+            <i class="glyphicon glyphicon-option-vertical dropdown-toggle" id="taskMenu" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false"></i>
+
+            <div class="dropdown-menu" aria-labelledby="taskMenu">
+              <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#editTask">View</a>
+              <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editTask">Edit</a>
+              <a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editTask">Add Tester</a>
+              <div role="separator" class="divider"></div>
+              <a class="btn btn-danger btn-xs">Delete Task</a>
+
+            </div>
+
+            <!--<ul class="dropdown-menu" aria-labelledby="taskMenu">-->
+
+              <!--<li><a routerLink="/details/{{task.id}}"><span class="glyphicon glyphicon-eye-open"></span> View</a>-->
+              <!--</li>-->
+              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()"><a (click)="getTaskToEdit(task)" data-toggle="modal"-->
+                                                                    <!--data-target="#EditTask"><span-->
+                <!--class="glyphicon glyphicon-edit"></span> Edit</a></li>-->
+              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()"><a (click)="getTaskToEdit(task)" data-toggle="modal"-->
+                                                                    <!--data-target="#TestersModal"><span-->
+                <!--class="fa fa-cogs"></span> Add Tester</a></li>-->
+              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()" role="separator" class="divider"></li>-->
+              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()"><a (click)="removeTask(task.id,task.title)"><span-->
+                <!--class="glyphicon glyphicon-remove"></span>-->
+                <!--Remove</a></li>-->
+            <!--</ul>-->
+          </div>
+          <!--ROW MENU END-->
+        </td>
+
+        <td>{{task.title | capitalize | substring}}</td>
+        <td>{{task.date | timeAgo}}</td>
+        <td>{{task.category}}</td>
+        <td>{{task.author}}</td>
+        <td>{{task.assignee}}</td>
+        <td>{{task.status}}</td>
+        <td>
+          <div *ngIf="task.status == 'Testing'"><span *ngFor="let tester of task.testers"><span class="name-initials">{{tester?.name | nameInitials}}</span>&nbsp;</span>
+          </div>
+
+        </td>
+        <td><i class="fa" [ngClass]="{
+      'priority-low': task.priority == 'Low',
+      'priority-normal': task.priority == 'Normal',
+      'priority-important': task.priority == 'Important',
+      'priority-urgent': task.priority == 'Urgent',
+      'priority-critical': task.priority == 'Critical'
+      }"></i>
+          {{task.priority}}
+        </td>
+        <td align="center">
+        <span *ngIf="task.discussion == ''" (click)="getTaskToEdit(task)" class="fa fa-plus" aria-hidden="true"
+              data-toggle="modal" data-target="#editTask"></span>
+          <span *ngIf="task.discussion != ''" (click)="getTaskToEdit(task)" class="fa fa-weixin" aria-hidden="true"
+                data-toggle="modal" data-target="#editTask"></span>
+        </td>
+        <td align="center">
+          <span *ngIf="task.comment == ''">--</span>
+          <span *ngIf="task.comment != ''" class="glyphicon glyphicon-comment" (click)="readComment(task.comment)"
+                data-toggle="modal" data-target="#editTask"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="ng2-pagination pull-right">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!--ADD TASK MODAL-->
+
+<app-add-task [projectId]="projectId" (updateTasks)="updateTasksTable($event)"></app-add-task>
+
+<!--EDIT TASK MODAL-->
+<app-edit-task></app-edit-task>
