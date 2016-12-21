@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-body {
+html {
   overflow-x: hidden;
 }
 
@@ -36,6 +36,18 @@ body {
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
+
+.sidebar-wrapper::-webkit-scrollbar {
+  -webkit-appearance: none;
+  height: 7px;
+  background: #dfe5ed;
+  border-radius: 0
+}
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #b2c4db
+}
+
 
 #wrapper.toggled #sidebar-wrapper {
   width: 250px;
@@ -120,6 +132,18 @@ body {
 
   #sidebar-wrapper {
     width: 250px;
+  }
+
+  #sidebar-wrapper::-webkit-scrollbar {
+    -webkit-appearance: none;
+    height: 7px;
+    width: 5px;
+    background: #000;
+    border-radius: 0
+  }
+  #sidebar-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #cccccc;
   }
 
   #wrapper.toggled #sidebar-wrapper {

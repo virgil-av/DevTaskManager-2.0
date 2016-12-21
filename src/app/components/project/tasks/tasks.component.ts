@@ -3,6 +3,7 @@ import {DatabaseService} from "../../../services/database.service";
 import {Auth} from "../../../services/auth0.service";
 import {ActivatedRoute} from "@angular/router";
 
+import * as _ from 'lodash';
 declare let $:any;
 
 @Component({
@@ -12,28 +13,22 @@ declare let $:any;
 })
 export class TasksComponent implements OnInit {
 
-  anyErrors: Error;
   isLoading: boolean = false;
-
-  selectedComment: string;
-  selectedTask;
+  selectedTask: any;
   projectId: string;
   tasks: any[] = [];
   anyError: Error;
   sortBy: string = '-date';
   rowsPerPage: number = 20;
   sortVariable; // used as toggle for table column sorting
-  filterQuery = '' // used for the search
 
 
-  vis: any;
 
   constructor(private db: DatabaseService, private auth: Auth, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.parent.params
       .map(params => params['id'])
       .subscribe(id => {
           this.projectId = id;
-          console.log(id)
         },
         error => this.anyError = error
       );
@@ -42,7 +37,6 @@ export class TasksComponent implements OnInit {
   ngOnInit() {
     this.db.getTasks(this.projectId).subscribe(tasks => {
       this.tasks = tasks;
-      console.log(tasks)
     })
 
   }
@@ -63,10 +57,20 @@ export class TasksComponent implements OnInit {
     }
   }
 
-   makeVisible(){
-    this.vis = !this.vis
-   }
+  openTask(task: any, actionState: string){
+    this.selectedTask = task;
+  }
 
+  deleteTask(id){
+    this.db.deleteTask(this.projectId, id).subscribe(() => {
+      _.remove(this.tasks,{
+        id: id
+      });
+      $('#deleteTask').modal('hide');
+    },
+    error => this.anyError = error
+    );
+  }
 
 
 }

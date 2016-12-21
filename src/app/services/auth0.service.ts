@@ -43,7 +43,7 @@ export class Auth{
 
       });
 
-      if(this.loggedUser()){
+      if(this.loggedUserName()){
 
       }
 
@@ -77,7 +77,7 @@ export class Auth{
       && this.userProfile.app_metadata.roles.indexOf('admin') > -1;
   }
 
-  public loggedUser(){
+  public loggedUserName(){
     if(this.userProfile && this.userProfile.user_metadata && this.userProfile.user_metadata.name){
       return this.userProfile.user_metadata.name
     }

@@ -18,19 +18,21 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-  addProjectToList(body: any){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this.http.post(dbSettings.dbUrl + dbSettings.dbList,JSON.stringify(body),{headers:headers})
-      .map(response => response.json());
-  }
 
   createNewTask(body: any, id: string){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + id,JSON.stringify(body),{headers:headers})
+    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + id + '/tasks',JSON.stringify(body),{headers:headers})
       .map(response => response.json());
   }
+
+  createNewTaskMessage(body: any, projectId: string, taskId: string ){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/discussion',JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
 
 
   getAllProjects(){
@@ -38,10 +40,11 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-  getSingleProject(id: string){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbList + "/" + id)
+  getProjectSummary(projectId: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbList + "/" + projectId)
       .map(response => response.json());
   }
+
 
   getCategory(){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbCategory)
@@ -53,8 +56,18 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-  getTasks(id){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + id + '/tasks')
+  getTasks(projectId){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks')
+      .map(response => response.json());
+  }
+
+  deleteProject(projectId){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId)
+      .map(response => response.json());
+  }
+
+  deleteTask(projectId, taskId){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId)
       .map(response => response.json());
   }
 

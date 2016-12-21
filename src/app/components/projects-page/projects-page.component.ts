@@ -29,9 +29,7 @@ export class ProjectsPageComponent implements OnInit {
       "colorId": this.getRandomColor(),
       "description": [''],
       "id": this.db.generateUniqueId()
-
     })
-
   }
 
   ngOnInit() {
@@ -41,8 +39,6 @@ export class ProjectsPageComponent implements OnInit {
     },
       error => this.anyErrors = error
     )
-
-
   }
 
   addNewProject(){
@@ -50,30 +46,25 @@ export class ProjectsPageComponent implements OnInit {
 
     this.db.createNewProject(this.formAddProject.value).subscribe(response => {
 
-      this.db.addProjectToList(this.formAddProject.value).subscribe(response =>{
-
         this.allProjects.push(response);
 
-          this.formAddProject.reset({
-            "id": this.db.generateUniqueId(),
-            "creationDate": new Date(),
-            "colorId": this.getRandomColor(),
-            "projectName": '',
-            "description": ''
-          });
+        this.formAddProject.reset({
+          "id": this.db.generateUniqueId(),
+          "creationDate": new Date(),
+          "colorId": this.getRandomColor(),
+          "projectName": '',
+          "description": ''
+        });
 
-          this.isLoading = false;
+        this.isLoading = false;
 
-          this.pcService.sendProjectsList(this.allProjects);
+        this.pcService.sendProjectsList(this.allProjects);
 
-          $('#addProject').modal('hide'); //closes modal window on submission complete
+        $('#addProject').modal('hide'); //closes modal window on submission complete
 
-        },
-        error => this.anyErrors = error);
-    },
+      },
       error => this.anyErrors = error
     );
-
   }
 
 

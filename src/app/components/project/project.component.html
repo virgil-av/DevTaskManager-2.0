@@ -29,7 +29,7 @@
       Add Task
     </button></span>
     <span *ngIf="selectedProject"><a *ngIf="router.isActive('/project/' + selectedProject.id + '/dashboard')" class="btn btn-info btn-sm">Edit</a></span>
-    <span *ngIf="selectedProject"><a *ngIf="router.isActive('/project/' + selectedProject.id + '/dashboard')" class="btn btn-danger btn-sm">Delete</a></span>
+    <span *ngIf="selectedProject"><a *ngIf="router.isActive('/project/' + selectedProject.id + '/dashboard')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteProject">Delete</a></span>
 
   </div>
 
@@ -47,3 +47,20 @@
 
 </div>
 <!-- /#wrapper -->
+
+
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="modal fade" id="deleteProject" tabindex="-1" role="dialog" aria-labelledby="deleteProjectLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <strong class="text-danger">Are you sure you want to delete this project?</strong>
+      </div>
+      <div class="modal-footer">
+        <button (click)="deleteProject()" type="button" class="btn btn-danger">YES</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+      </div>
+    </div>
+  </div>
+</div>

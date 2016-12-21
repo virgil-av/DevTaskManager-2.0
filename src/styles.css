@@ -7,3 +7,7 @@ html{
 }
 
 
+body {
+  overflow-y: hidden;
+}
+

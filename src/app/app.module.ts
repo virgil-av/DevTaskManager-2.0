@@ -25,6 +25,8 @@ import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { AddTaskComponent } from './components/project/tasks/add-task/add-task.component';
 import { NameInitialsPipe } from './pipes/name-initials.pipe';
 import { EditTaskComponent } from './components/project/tasks/edit-task/edit-task.component';
+import { TaskDiscussionComponent } from './components/project/tasks/edit-task/task-discussion/task-discussion.component';
+import { TaskTestersComponent } from './components/project/tasks/edit-task/task-testers/task-testers.component';
 
 
 
@@ -45,6 +47,8 @@ import { EditTaskComponent } from './components/project/tasks/edit-task/edit-tas
     AddTaskComponent,
     NameInitialsPipe,
     EditTaskComponent,
+    TaskDiscussionComponent,
+    TaskTestersComponent,
 
   ],
   imports: [

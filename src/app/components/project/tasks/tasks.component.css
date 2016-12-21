@@ -12,12 +12,13 @@
 .inner-page-wrapper::-webkit-scrollbar {
   -webkit-appearance: none;
   height: 7px;
+  width: 5px;
   background: #dfe5ed;
   border-radius: 0
 }
 .inner-page-wrapper::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #b2c4db
+  background-color: #000
 }
 
 

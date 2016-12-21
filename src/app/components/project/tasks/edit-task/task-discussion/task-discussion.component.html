@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2 text-center">
+      <div *ngIf="auth.authenticated() && auth.loggedUserName()">
+        <div>
+          <span *ngIf="!auth.profilePic()"><img src="https://i.imgbox.com/sd8PGUwy.png" class="profile-image"></span>
+          <span *ngIf="auth.profilePic()"><img src="{{auth.userProfile.user_metadata.user_avatar}}" class="profile-image"></span>
+        </div>
+        <div>
+          {{auth.userProfile.user_metadata.name}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <form [formGroup]="addMessageForm" (ngSubmit)="addMessage()">
+
+        <div class="form-group">
+          <label>Message:</label>
+          <textarea class="form-control" formControlName="message"
+                    placeholder="Type message, markdown supported."></textarea>
+        </div>
+
+        <a (click)="addMessage()" class="btn btn-success pull-right">Send</a>
+
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-10">
+      <div class="panel panel-default">
+      <div class="panel-body">
+      Basic panel
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

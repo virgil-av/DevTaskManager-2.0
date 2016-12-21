@@ -82,29 +82,12 @@
                aria-haspopup="true" aria-expanded="false"></i>
 
             <div class="dropdown-menu" aria-labelledby="taskMenu">
-              <a class="btn btn-info btn-xs" data-toggle="modal" data-target="#editTask">View</a>
-              <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editTask">Edit</a>
-              <a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editTask">Add Tester</a>
+              <a (click)="openTask(task, 'view')" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editTask">View</a>
+              <a (click)="openTask(task, 'edit')" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editTask">Edit</a>
               <div role="separator" class="divider"></div>
-              <a class="btn btn-danger btn-xs">Delete Task</a>
+              <a (click)="openTask(task, 'delete')" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteTask">Delete Task</a>
 
             </div>
-
-            <!--<ul class="dropdown-menu" aria-labelledby="taskMenu">-->
-
-              <!--<li><a routerLink="/details/{{task.id}}"><span class="glyphicon glyphicon-eye-open"></span> View</a>-->
-              <!--</li>-->
-              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()"><a (click)="getTaskToEdit(task)" data-toggle="modal"-->
-                                                                    <!--data-target="#EditTask"><span-->
-                <!--class="glyphicon glyphicon-edit"></span> Edit</a></li>-->
-              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()"><a (click)="getTaskToEdit(task)" data-toggle="modal"-->
-                                                                    <!--data-target="#TestersModal"><span-->
-                <!--class="fa fa-cogs"></span> Add Tester</a></li>-->
-              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()" role="separator" class="divider"></li>-->
-              <!--<li *ngIf="auth.authenticated() && auth.isAdmin()"><a (click)="removeTask(task.id,task.title)"><span-->
-                <!--class="glyphicon glyphicon-remove"></span>-->
-                <!--Remove</a></li>-->
-            <!--</ul>-->
           </div>
           <!--ROW MENU END-->
         </td>
@@ -168,4 +151,20 @@
 <app-add-task [projectId]="projectId" (updateTasks)="updateTasksTable($event)"></app-add-task>
 
 <!--EDIT TASK MODAL-->
-<app-edit-task></app-edit-task>
+<app-edit-task [selectedTask]="selectedTask"></app-edit-task>
+
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="modal fade" id="deleteTask" tabindex="-1" role="dialog" aria-labelledby="deleteTaskLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <strong class="text-danger">Are you sure you want to delete this task?</strong>
+      </div>
+      <div class="modal-footer">
+        <button (click)="deleteTask(selectedTask.id)" type="button" class="btn btn-danger">YES</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+      </div>
+    </div>
+  </div>
+</div>

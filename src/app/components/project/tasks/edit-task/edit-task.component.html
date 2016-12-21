@@ -3,16 +3,104 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="editTaskLabel">Modal title</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editTaskLabel"></h4>
       </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <div *ngIf="selectedTask" class="modal-body">
+        <div class="container-fluid">
+          <!--MODAL BODY START-->
+
+          <!--EDIT-->
+          <div class="row">
+            <form [formGroup]="editTaskForm" (ngSubmit)="editTask()">
+              <div class="col-md-7">
+                <div class="form-group"
+                     [class.has-error]="editTaskForm.controls.title.dirty && (addTaskForm.controls.title.errors != null)">
+                  <label>Title:</label>
+                  <input type="text" class="form-control" formControlName="title" placeholder="A descriptive title...">
+                  <span class="text-danger"
+                        *ngIf="editTaskForm.controls.title.dirty && (editTaskForm.controls.title.errors != null)">Minimum length for your title is 5 characters.</span>
+                </div>
+
+                <div class="form-group">
+                  <label>Comment:</label>
+                  <textarea class="form-control" formControlName="comment" rows="7"
+                            placeholder="Providing that extra information is always a better choice."></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-5">
+                <div class="form-group" *ngIf="taskSettings">
+                  <label>Status:</label>
+                  <select class="form-control" formControlName="status">
+                    <option *ngFor="let status of taskSettings.status" value="{{status}}">{{status}}</option>
+                  </select>
+                </div>
+
+                <div class="form-group" *ngIf="taskSettings">
+                  <label>Priority:</label>
+                  <select class="form-control" formControlName="priority">
+                    <option *ngFor="let priority of taskSettings.priority" value="{{priority}}">{{priority}}</option>
+                  </select>
+                </div>
+
+                <div class="form-group" *ngIf="userList">
+                  <label>Assignee:</label>
+                  <input type="text" class="form-control" formControlName="assignee"
+                         placeholder="Double-click to select..."
+                         list="userList">
+                  <datalist id="userList">
+                    <option *ngFor="let assignee of userList" value="{{assignee.name}}">
+                  </datalist>
+                </div>
+
+                <div class="form-group" *ngIf="categoryList">
+                  <label>Category:</label>
+                  <select class="form-control" formControlName="category">
+                    <option *ngFor="let category of categoryList" value="{{category.name}}">{{category.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!--TESTERS-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Testing Info</h3>
+                </div>
+                <div class="panel-body">
+                  <app-task-testers></app-task-testers>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--DISCUSSION-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Discussion</h3>
+                </div>
+                <div class="panel-body">
+                  <app-task-discussion [taskId]="selectedTask.id"></app-task-discussion>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <!--MODAL BODY END-->
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary">Save changes</button>
     </div>
   </div>
+</div>
 </div>

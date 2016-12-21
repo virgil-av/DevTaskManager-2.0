@@ -31,12 +31,11 @@ export class AddTaskComponent implements OnInit {
   ngOnInit() {
 
     this.taskSettings = taskSettings;
-
     this.db.getCategory().subscribe(category => this.categoryList = category, error => this.anyError = error);
     this.db.getUsers().subscribe(user => this.userList = user, error => this.anyError = error);
 
 
-    this.loggedUserName = this.auth.loggedUser();
+    this.loggedUserName = this.auth.loggedUserName();
 
     this.addTaskForm = this.formBuilder.group({
       'id': this.db.generateUniqueId(),
