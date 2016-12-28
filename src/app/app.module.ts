@@ -27,6 +27,7 @@ import { NameInitialsPipe } from './pipes/name-initials.pipe';
 import { EditTaskComponent } from './components/project/tasks/edit-task/edit-task.component';
 import { TaskDiscussionComponent } from './components/project/tasks/edit-task/task-discussion/task-discussion.component';
 import { TaskTestersComponent } from './components/project/tasks/edit-task/task-testers/task-testers.component';
+import { ContactsPageComponent } from './components/contacts-page/contacts-page.component';
 
 
 
@@ -49,6 +50,7 @@ import { TaskTestersComponent } from './components/project/tasks/edit-task/task-
     EditTaskComponent,
     TaskDiscussionComponent,
     TaskTestersComponent,
+    ContactsPageComponent,
 
   ],
   imports: [

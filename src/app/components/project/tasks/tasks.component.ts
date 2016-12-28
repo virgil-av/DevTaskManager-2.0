@@ -61,12 +61,22 @@ export class TasksComponent implements OnInit {
     this.selectedTask = task;
   }
 
+  updateTasks(value){
+    let task = _.find(this.tasks,{
+      id: this.selectedTask.id
+    });
+
+    _.merge(task, value);
+  }
+
   deleteTask(id){
+    this.isLoading = true;
     this.db.deleteTask(this.projectId, id).subscribe(() => {
       _.remove(this.tasks,{
         id: id
       });
-      $('#deleteTask').modal('hide');
+        this.isLoading = false;
+        $('#deleteTask').modal('hide');
     },
     error => this.anyError = error
     );

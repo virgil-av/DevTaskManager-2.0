@@ -47,8 +47,6 @@ export class AddTaskComponent implements OnInit {
       'comment': [''],
       'date': [new Date()],
       'author': [this.loggedUserName], // auth0 get author of task
-      'discussion': this.formBuilder.array([]),
-      'testers': this.formBuilder.array([])
     });
 
   }
@@ -64,17 +62,17 @@ export class AddTaskComponent implements OnInit {
       'comment': '',
       'date': new Date(),
       'author': this.loggedUserName,
-      'discussion': [],
-      'testers': []
     });
   }
 
   createTask() {
+    this.isLoading = true;
     this.db.createNewTask(this.addTaskForm.value,this.projectId)
       .subscribe( response => {
       this.updateTasks.emit(response);
-
+      this.isLoading = false;
       this.resetForm();
+
       $('#addTask').modal('hide'); //closes modal window
     })
   }

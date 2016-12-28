@@ -16,7 +16,7 @@
             <form [formGroup]="editTaskForm" (ngSubmit)="editTask()">
               <div class="col-md-7">
                 <div class="form-group"
-                     [class.has-error]="editTaskForm.controls.title.dirty && (addTaskForm.controls.title.errors != null)">
+                     [class.has-error]="editTaskForm.controls.title.dirty && (editTaskForm.controls.title.errors != null)">
                   <label>Title:</label>
                   <input type="text" class="form-control" formControlName="title" placeholder="A descriptive title...">
                   <span class="text-danger"
@@ -87,7 +87,7 @@
                   <h3 class="panel-title">Discussion</h3>
                 </div>
                 <div class="panel-body">
-                  <app-task-discussion [taskId]="selectedTask.id"></app-task-discussion>
+                  <app-task-discussion [task]="selectedTask" [projectId]="projectId"></app-task-discussion>
                 </div>
               </div>
             </div>
@@ -99,7 +99,10 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary">Save changes</button>
+      <button *ngIf="editTaskForm" [disabled]="editTaskForm.invalid" (click)="editTask()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
+        <span *ngIf="isLoading === false">Save changes</span>
+        <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
+      </button>
     </div>
   </div>
 </div>

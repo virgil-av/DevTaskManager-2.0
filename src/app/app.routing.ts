@@ -4,6 +4,7 @@ import {LoginPageComponent} from "./components/login-page/login-page.component";
 import {ProjectsPageComponent} from "./components/projects-page/projects-page.component";
 import {ProjectComponent} from "./components/project/project.component";
 import {PROJECT_ROUTES} from "./components/project/project.routes";
+import {ContactsPageComponent} from "./components/contacts-page/contacts-page.component";
 
 
 
@@ -21,6 +22,9 @@ const routes: Routes = [
   },
   {
     path: 'project/:id', component: ProjectComponent, children: PROJECT_ROUTES
+  },
+  {
+    path: 'contacts', component: ContactsPageComponent
   },
   {
     path: '**', redirectTo: ''

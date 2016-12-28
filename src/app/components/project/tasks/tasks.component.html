@@ -151,7 +151,7 @@
 <app-add-task [projectId]="projectId" (updateTasks)="updateTasksTable($event)"></app-add-task>
 
 <!--EDIT TASK MODAL-->
-<app-edit-task [selectedTask]="selectedTask"></app-edit-task>
+<app-edit-task [selectedTask]="selectedTask" [projectId]="projectId" (updateTasks)="updateTasks($event)"></app-edit-task>
 
 
 <!-- CONFIRM DELETE MODAL -->
@@ -162,7 +162,10 @@
         <strong class="text-danger">Are you sure you want to delete this task?</strong>
       </div>
       <div class="modal-footer">
-        <button (click)="deleteTask(selectedTask.id)" type="button" class="btn btn-danger">YES</button>
+        <button (click)="deleteTask(selectedTask.id)" type="button" class="btn" [ngClass]="{'btn-danger': isLoading === false,'btn-info': isLoading === true}">
+          <span *ngIf="isLoading === false">Yes</span>
+          <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
+        </button>
         <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
       </div>
     </div>

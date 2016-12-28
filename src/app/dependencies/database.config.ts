@@ -4,6 +4,7 @@ interface Settings {
   dbProjects: string;
   dbCategory: string;
   dbUsers: string;
+  dbContacts: string;
 }
 
 
@@ -12,6 +13,7 @@ export const dbSettings: Settings = {
   dbList: '/list',
   dbProjects: '/projects',
   dbCategory: '/category',
-  dbUsers: '/users'
+  dbUsers: '/users',
+  dbContacts: '/contacts'
 
 }

@@ -22,7 +22,7 @@ export class DatabaseService {
   createNewTask(body: any, id: string){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + id + '/tasks',JSON.stringify(body),{headers:headers})
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbProjects + '/' + id + '/tasks',JSON.stringify(body),{headers:headers})
       .map(response => response.json());
   }
 
@@ -30,6 +30,20 @@ export class DatabaseService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/discussion',JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
+  updateEditedTask(body: any, projectId: string, taskId: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
+  createNewContact(body: any){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbContacts,JSON.stringify(body),{headers:headers})
       .map(response => response.json());
   }
 
@@ -61,6 +75,12 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
+  getContacts(){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbContacts)
+      .map(response => response.json());
+  }
+
+
   deleteProject(projectId){
     return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId)
       .map(response => response.json());
@@ -68,6 +88,11 @@ export class DatabaseService {
 
   deleteTask(projectId, taskId){
     return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId)
+      .map(response => response.json());
+  }
+
+  deleteMessage(projectId, taskId, messageId){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId + '/discussion/' + messageId)
       .map(response => response.json());
   }
 

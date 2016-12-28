@@ -4,6 +4,7 @@ import {ParentChildrenService} from "../../services/parent-children.service";
 import { Subscription }   from 'rxjs/Subscription';
 import {DatabaseService} from "../../services/database.service";
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
