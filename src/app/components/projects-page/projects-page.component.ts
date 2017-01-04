@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatabaseService} from "../../services/database.service";
 import {ParentChildrenService} from "../../services/parent-children.service";
 import {Router} from "@angular/router";
+import {Auth} from "../../services/auth0.service";
 
 declare let $:any;
 
@@ -21,14 +22,21 @@ export class ProjectsPageComponent implements OnInit {
   allProjects: any[];
 
 
-  constructor(private formBuilder: FormBuilder, private db: DatabaseService, private pcService: ParentChildrenService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private db: DatabaseService,
+              private pcService: ParentChildrenService,
+              private router: Router,
+              private auth: Auth
+  ) {
+
 
     this.formAddProject = formBuilder.group({
       "projectName": ['',[Validators.required,Validators.maxLength(40)]],
       "creationDate": new Date(),
       "colorId": this.getRandomColor(),
       "description": [''],
-      "id": this.db.generateUniqueId()
+      "id": this.db.generateUniqueId(),
+      "createdBy": this.auth.loggedUserName()
     })
   }
 
@@ -41,6 +49,16 @@ export class ProjectsPageComponent implements OnInit {
     )
   }
 
+  formReset(){
+    this.formAddProject.reset({
+      "id": this.db.generateUniqueId(),
+      "creationDate": new Date(),
+      "colorId": this.getRandomColor(),
+      "projectName": '',
+      "description": ''
+    });
+  }
+
   addNewProject(){
     this.isLoading = true;
 
@@ -48,13 +66,7 @@ export class ProjectsPageComponent implements OnInit {
 
         this.allProjects.push(response);
 
-        this.formAddProject.reset({
-          "id": this.db.generateUniqueId(),
-          "creationDate": new Date(),
-          "colorId": this.getRandomColor(),
-          "projectName": '',
-          "description": ''
-        });
+        this.formReset();
 
         this.isLoading = false;
 
@@ -75,7 +87,7 @@ export class ProjectsPageComponent implements OnInit {
 
 
   getRandomColor() {
-    let letters = '0123456789ABCDEF';
+    let letters = '6666666789ABCDEF';
     let color = '#';
     for (let i = 0; i < 6; i++ ) {
       color += letters[Math.floor(Math.random() * 16)];

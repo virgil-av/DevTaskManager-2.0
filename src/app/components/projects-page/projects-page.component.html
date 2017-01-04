@@ -49,21 +49,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!--ADD PROJECT MODAL-->
 
  <div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="addProjectLabel">
@@ -90,7 +75,7 @@
        </div>
        <div class="modal-footer">
          <div class="pull-left"><span class="text-danger">* Required</span></div>
-         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         <button (click)="formReset()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
          <button [disabled]="formAddProject.invalid" (click)="addNewProject()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
            <span *ngIf="isLoading === false">Add Project</span>
            <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>

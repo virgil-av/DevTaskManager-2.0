@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers} from "@angular/http";
 import {dbSettings} from '../dependencies/database.config';
-const uniqid: any = require('uniqid');
+import 'rxjs/add/operator/map';
 
-import 'rxjs/add/operator/map'
+const uniqid: any = require('uniqid');
 
 
 @Injectable()
@@ -70,7 +70,7 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-  getTasks(projectId){
+  getTasks(projectId: string){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks')
       .map(response => response.json());
   }
@@ -80,18 +80,22 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
+  getContactByEmail(email: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbContacts + '/' + email)
+      .map(response => response.json());
+  }
 
-  deleteProject(projectId){
+  deleteProject(projectId: string){
     return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId)
       .map(response => response.json());
   }
 
-  deleteTask(projectId, taskId){
+  deleteTask(projectId: string, taskId: string){
     return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId)
       .map(response => response.json());
   }
 
-  deleteMessage(projectId, taskId, messageId){
+  deleteMessage(projectId: string, taskId: string, messageId: string){
     return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId + '/discussion/' + messageId)
       .map(response => response.json());
   }

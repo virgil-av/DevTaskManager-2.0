@@ -5,7 +5,6 @@ import {Auth} from "../../../../services/auth0.service";
 import {taskSettings} from "../../../../dependencies/add-task.settings";
 import {ActivatedRoute} from "@angular/router";
 
-
 declare let $:any;
 
 @Component({

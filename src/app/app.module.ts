@@ -28,6 +28,8 @@ import { EditTaskComponent } from './components/project/tasks/edit-task/edit-tas
 import { TaskDiscussionComponent } from './components/project/tasks/edit-task/task-discussion/task-discussion.component';
 import { TaskTestersComponent } from './components/project/tasks/edit-task/task-testers/task-testers.component';
 import { ContactsPageComponent } from './components/contacts-page/contacts-page.component';
+import { TeamComponent } from './components/project/team/team.component';
+import { CategoriesComponent } from './components/project/categories/categories.component';
 
 
 
@@ -51,6 +53,8 @@ import { ContactsPageComponent } from './components/contacts-page/contacts-page.
     TaskDiscussionComponent,
     TaskTestersComponent,
     ContactsPageComponent,
+    TeamComponent,
+    CategoriesComponent,
 
   ],
   imports: [

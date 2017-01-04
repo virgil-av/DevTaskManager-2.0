@@ -4,6 +4,8 @@ import {tokenNotExpired} from 'angular2-jwt'
 import {Router} from "@angular/router";
 import {authOptions} from "../dependencies/auth.options";
 import {myConfig} from "../dependencies/auth.config";
+import {Http, Headers} from "@angular/http";
+
 
 
 // Avoid name not found warnings
@@ -19,7 +21,7 @@ export class Auth{
   userProfile: any;
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: Http) {
 
 
     // Set userProfile attribute of already saved profile
@@ -87,6 +89,37 @@ export class Auth{
     if(this.userProfile && this.userProfile.user_metadata && this.userProfile.user_metadata.user_avatar){
       return this.userProfile.user_metadata.user_avatar
     }
+  }
+
+  getListOfUsers(){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('Authorization',myConfig.token);
+    return this.http.get(myConfig.domainUrl + myConfig.usersApiUrl + myConfig.usersQuery,{headers:headers})
+      .map(response => response.json());
+  }
+
+  createNewUser(body: any){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('Authorization',myConfig.token);
+    return this.http.post(myConfig.domainUrl + myConfig.usersApiUrl,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
+  updateUser(body:any, userId: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('Authorization',myConfig.token);
+    return this.http.patch(myConfig.domainUrl + myConfig.usersApiUrl + '/' + userId,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
+  deleteUser(userId: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('Authorization',myConfig.token);
+    return this.http.delete(myConfig.domainUrl + myConfig.usersApiUrl + '/' + userId,{headers:headers})
   }
 
 

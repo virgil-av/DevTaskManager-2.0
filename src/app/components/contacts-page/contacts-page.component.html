@@ -7,8 +7,6 @@
 
 
 
-
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -18,9 +16,13 @@
           <thead>
           <tr>
             <th width="1%">#</th>
-            <th width="29%">Contact</th>
-            <th width="25%">Email</th>
-            <th width="15%">Create account</th>
+            <th width="23%">Contact</th>
+            <th width="20%">Email</th>
+            <th width="5%">Role</th>
+            <th width="6%">Created</th>
+            <th width="6%">Last Login</th>
+            <th width="8%">Last IP</th>
+            <th width="6%">Login Counts</th>
             <th width="10%"></th>
             <th width="10%"></th>
             <th width="5%"></th>
@@ -29,17 +31,25 @@
           <tbody *ngIf="contactsList">
           <tr *ngFor="let contact of contactsList, let i = index">
             <td>{{i}}</td>
-            <td>{{contact.firstName}} {{contact.lastName}}</td>
+            <td>
+              {{contact.user_metadata.name}}
+            </td>
             <td>{{contact.email}}</td>
             <td>
-              <button class="btn btn-primary btn-xs btn-block" [disabled]="contact.authAccount">
-                <span *ngIf="!contact.authAccount">Create App Account</span>
-                <span *ngIf="contact.authAccount">Account Already Created</span>
-              </button>
+              <span *ngIf="contact.user_metadata.role" >
+                <span class="text-danger" *ngIf="contact.user_metadata.role === 'admin'" >Admin</span>
+                <span class="text-warning" *ngIf="contact.user_metadata.role === 'superUser'" >Super User</span>
+                <span class="text-primary" *ngIf="contact.user_metadata.role === 'read'" >User</span>
+              </span>
             </td>
-            <td><button class="btn btn-warning btn-xs btn-block">Reset Password</button></td>
-            <td><button class="btn btn-default btn-xs btn-block" disabled>Edit</button></td>
-            <td><button class="btn btn-danger btn-xs btn-block">Delete</button></td>
+            <td>{{contact.created_at | date:'d/M/y'}}</td>
+            <td>{{contact.last_login | date:'d/M/y'}}</td>
+            <td>{{contact.last_ip}}</td>
+            <td>{{contact.logins_count}}</td>
+            <td><button (click)="resetPassword(contact.user_id)" class="btn btn-warning btn-xs btn-block">Reset Password
+              <loading-spinner *ngIf="contact.user_id === selectedUser.id" [visible]="isLoading"></loading-spinner></button></td>
+            <td><button (click)="selectContact(contact)" class="btn btn-default btn-xs btn-block">Edit</button></td>
+            <td><button (click)="deleteUser(contact.user_id)" class="btn btn-danger btn-xs btn-block">Delete</button></td>
           </tr>
           </tbody>
         </table>
@@ -64,29 +74,67 @@
       <div class="modal-body">
         <form [formGroup]="formAddContact" (ngSubmit)="addNewContact()">
           <div>
-            <div class="form-group" [class.has-error]="formAddContact.controls.firstName.hasError('required') && formAddContact.controls.firstName.touched">
-              <label>First Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" formControlName="firstName" ngControl="username">
-              <span class="text-danger"  *ngIf="formAddContact.controls.firstName.hasError('required') && formAddContact.controls.firstName.touched">Invalid First Name</span>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formAddContact.controls.firstName.hasError('required') && formAddContact.controls.firstName.touched">
+                  <label>First Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="firstName">
+                  <span class="text-danger"  *ngIf="formAddContact.controls.firstName.hasError('required') && formAddContact.controls.firstName.touched">Invalid First Name</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formAddContact.controls.lastName.hasError('required') && formAddContact.controls.lastName.touched">
+                  <label>Last Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="lastName">
+                  <span class="text-danger"  *ngIf="formAddContact.controls.lastName.hasError('required') && formAddContact.controls.lastName.touched">Invalid Last Name</span>
+                </div>
+              </div>
             </div>
 
-            <div class="form-group" [class.has-error]="formAddContact.controls.lastName.hasError('required') && formAddContact.controls.lastName.touched">
-              <label>First Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" formControlName="lastName">
-              <span class="text-danger"  *ngIf="formAddContact.controls.lastName.hasError('required') && formAddContact.controls.lastName.touched">Invalid Last Name</span>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="(formAddContact.controls.email.hasError('noEmail') || formAddContact.controls.email.hasError('duplicate')) && formAddContact.controls.email.touched">
+                  <label>Email<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="email">
+                  <span class="text-danger" *ngIf="formAddContact.controls.email.hasError('noEmail') && formAddContact.controls.email.touched">Invalid email address</span>
+                  <span class="text-danger" *ngIf="formAddContact.controls.email.hasError('duplicate') && formAddContact.controls.email.touched">This email already exists in contacts.</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formAddContact.controls.password.hasError('required') && formAddContact.controls.password.touched">
+                  <label>Password<span class="text-danger">**</span></label>
+                  <input type="text" class="form-control" formControlName="password">
+                  <span class="text-danger"  *ngIf="formAddContact.controls.password.hasError('required') && formAddContact.controls.password.touched">Invalid Password</span>
+                </div>
+              </div>
             </div>
 
-            <div class="form-group" [class.has-error]="formAddContact.controls.email.hasError('noEmail') && formAddContact.controls.email.touched">
-              <label>Email<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" formControlName="email">
-              <span class="text-danger" *ngIf="formAddContact.controls.email.hasError('noEmail') && formAddContact.controls.email.touched">Invalid email address</span>
+            <div class="spacer"></div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formAddContact.controls.userPermission.hasError('required')">
+                  <label>Permission<span class="text-danger">*</span></label>
+                  <select class="form-control" formControlName="userPermission">
+                    <option value="read">Read</option>
+                    <option value="superUser">Read & Write [Super User]</option>
+                    <option value="admin">Read & Write & Delete [Admin]</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formAddContact.controls.userAvatar.hasError('required')">
+                  <label>Avatar<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="userAvatar">
+                  <span class="text-danger"  *ngIf="formAddContact.controls.userAvatar.hasError('required')">Please add an avatar Url.</span>
+                </div>
+              </div>
             </div>
 
-            <div class="form-group" [class.has-error]="formAddContact.controls.password.hasError('required') && formAddContact.controls.password.touched">
-              <label>Password<span class="text-danger">**</span></label>
-              <input type="text" class="form-control" formControlName="password">
-              <span class="text-danger"  *ngIf="formAddContact.controls.password.hasError('required') && formAddContact.controls.password.touched">Invalid Password</span>
-            </div>
+
+
+
 
           </div>
         </form>
@@ -95,9 +143,71 @@
         <div class="pull-left text-danger">* Required</div>
         <br>
         <div class="pull-left text-danger"> ** The user will rest password on first time login.</div>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button (click)="resetForm()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button [disabled]="formAddContact.invalid" (click)="addNewContact()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
           <span *ngIf="isLoading === false">Add Contact</span>
+          <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--EDIT CONTACT MODAL-->
+<div class="modal fade" id="editContact" tabindex="-1" role="dialog" aria-labelledby="editContactLabel">
+  <div class="modal-dialog" role="document" *ngIf="selectedUser">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editContactLabel">Edit Contact</h4>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="formEditContact" (ngSubmit)="updateUser()">
+
+            <div *ngIf="selectedUser" class="row">
+              <div class="col-md-12">
+                <div class="form-group" [class.has-error]="formEditContact.controls.userName.hasError('required')">
+                  <label>User Name<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="userName" [(ngModel)]="selectedUser.name">
+                  <span class="text-danger"  *ngIf="formEditContact.controls.userName.hasError('required')">User Name is Required.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="spacer"></div>
+
+            <div *ngIf="selectedUser" class="row">
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formEditContact.controls.userPermission.hasError('required')">
+                  <label>Permission<span class="text-danger">*</span></label>
+                  <select class="form-control" formControlName="userPermission" [(ngModel)]="selectedUser.role">
+                    <option value="read">Read</option>
+                    <option value="superUser">Read & Write [Super User]</option>
+                    <option value="admin">Read & Write & Delete [Admin]</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" [class.has-error]="formEditContact.controls.userAvatar.hasError('required')">
+                  <label>Avatar<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" formControlName="userAvatar">
+                  <span class="text-danger"  *ngIf="formEditContact.controls.userAvatar.hasError('required')">Please add an avatar Url.</span>
+                </div>
+              </div>
+            </div>
+
+        </form>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <div class="pull-left text-danger">* Required</div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button [disabled]="formEditContact.invalid" (click)="updateContact()" type="button" class="btn" [ngClass]="{'btn-success': isLoading === false,'btn-info': isLoading === true}">
+          <span *ngIf="isLoading === false">Save Contact</span>
           <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
         </button>
       </div>
