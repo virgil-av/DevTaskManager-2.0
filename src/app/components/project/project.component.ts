@@ -5,6 +5,7 @@ import 'rxjs/add/operator/filter'
 import {DatabaseService} from "../../services/database.service";
 import {ParentChildrenService} from "../../services/parent-children.service";
 
+
 declare let $:any;
 
 
@@ -20,7 +21,10 @@ export class ProjectComponent implements OnInit {
   sideMenuToggle: any;
   selectedProject: any;
 
-  constructor(private db: DatabaseService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private db: DatabaseService,
+              private pcService: ParentChildrenService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -29,14 +33,12 @@ export class ProjectComponent implements OnInit {
       .subscribe((id) => {
         this.db.getProjectSummary(id).subscribe(response =>{
             this.selectedProject = response;
-
           },
           error => this.anyError = error
         )
       });
 
   }
-
 
 
   toggleSideMenu(){
@@ -50,6 +52,12 @@ export class ProjectComponent implements OnInit {
         this.router.navigate(['/projects']);
     })
   }
+
+
+  getContacts() {
+    this.pcService.callComponentMethod();
+  }
+
 
 
 }

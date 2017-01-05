@@ -14,6 +14,7 @@ export class TaskDiscussionComponent implements OnInit{
 
   addMessageForm: FormGroup;
   discussion: any[] = [];
+  @Input() contactsList: any[];
   anyError: Error;
   @Input() projectId: string;
   @Input() task: any;
@@ -30,6 +31,7 @@ export class TaskDiscussionComponent implements OnInit{
       "created": new Date(),
       "edited": false
     });
+
 
   }
 
@@ -62,7 +64,12 @@ export class TaskDiscussionComponent implements OnInit{
           id: response.messageId
         })
       })
+  }
 
+
+  getProfilePic(userName: string){
+    let contact =  _.find(this.contactsList, { user_metadata: {name: userName} });
+    return contact.user_metadata.user_avatar;
   }
 
 }

@@ -1,20 +1,7 @@
-div.container-fluid {
-  background-color: #eaeff5;
-}
-
-.no-contacts{
-  margin-top: 20px;
-  min-height: 200px;
-  background-color: #ffffff;
-}
-
 table{
   background-color: #ffffff;
 }
 
-.no-contacts-content{
-  padding-top: 40px;
-}
 
 .add-contact{
   background-color: #fff;

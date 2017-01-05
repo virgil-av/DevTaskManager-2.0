@@ -1,12 +1,49 @@
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-12">
+    <div class="inner-page-wrapper">
+
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-hover table-bordered table-condensed">
+            <thead>
+            <tr>
+              <th width="1%">#</th>
+              <th width="54%">Name</th>
+              <th width="30%"></th>
+              <th width="15%"></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="teamList">
+            <tr *ngFor="let member of teamList, let i = index">
+              <td>{{i+1}}</td>
+              <td>
+                {{member.name}}
+              </td>
+              <td>
+                <button class="btn btn-xs btn-info btn-block">Get User Info</button>
+              </td>
+              <td>
+                <button (click)="removeFromTeam(member.name)" class="btn btn-xs btn-danger btn-block">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+</div>
 
 
 
-
-
-
-
-
-
+<!--ADD CONTACT TO TEAM MODAL-->
 <div class="modal fade" id="addToTeam" tabindex="-1" role="dialog" aria-labelledby="addToTeamLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -16,12 +53,30 @@
       </div>
       <div class="modal-body">
 
+        <form [formGroup]="formAddToTeam" (ngSubmit)="addToTeam()">
+          <div>
 
+            <div class="row">
+              <div class="col-md-8" *ngIf="contactsList">
+                <div class="form-group" [class.has-error]="formAddToTeam.controls.name.hasError('duplicate')">
+                  <select class="form-control" formControlName="name">
+                    <option value="" disabled>Click to select...</option>
+                    <option *ngFor="let contact of contactsList" value="{{contact.user_metadata.name}}">{{contact.user_metadata.name}}</option>
+                  </select>
+                  <span class="text-danger"  *ngIf="formAddToTeam.controls.name.hasError('duplicate')">Contact is already a member of this team.</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-block btn-success" [disabled]="formAddToTeam.invalid">Add!</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
 
       </div>
       <div class="modal-footer">
-        <div class="pull-left"><span class="text-danger">* Required</span></div>
-
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Headers} from "@angular/http";
+import {Http, Headers} from '@angular/http';
 import {dbSettings} from '../dependencies/database.config';
 import 'rxjs/add/operator/map';
 
@@ -29,7 +29,7 @@ export class DatabaseService {
   createNewTaskMessage(body: any, projectId: string, taskId: string ){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/discussion',JSON.stringify(body),{headers:headers})
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/discussion',JSON.stringify(body),{headers:headers})
       .map(response => response.json());
   }
 
@@ -40,12 +40,21 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-  createNewContact(body: any){
+  addContactToTeam(body: any, projectId: string){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post(dbSettings.dbUrl + dbSettings.dbContacts,JSON.stringify(body),{headers:headers})
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/team',JSON.stringify(body),{headers:headers})
       .map(response => response.json());
   }
+
+
+  addCategory(body: any, projectId: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/categories',JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
 
 
 
@@ -55,48 +64,49 @@ export class DatabaseService {
   }
 
   getProjectSummary(projectId: string){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbList + "/" + projectId)
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbList + '/' + projectId)
       .map(response => response.json());
   }
 
-
-  getCategory(){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbCategory)
-      .map(response => response.json());
-  }
-
-  getUsers(){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbUsers)
-      .map(response => response.json());
-  }
 
   getTasks(projectId: string){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks')
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks')
       .map(response => response.json());
   }
 
-  getContacts(){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbContacts)
+  getProjectTeam(ProjectId: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + ProjectId + '/team')
       .map(response => response.json());
   }
 
-  getContactByEmail(email: string){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbContacts + '/' + email)
+  getProjectCategories(ProjectId: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + ProjectId + '/categories')
       .map(response => response.json());
   }
+
 
   deleteProject(projectId: string){
-    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId)
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId)
       .map(response => response.json());
   }
 
   deleteTask(projectId: string, taskId: string){
-    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId)
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId)
       .map(response => response.json());
   }
 
   deleteMessage(projectId: string, taskId: string, messageId: string){
-    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + "/" + projectId + '/tasks/' + taskId + '/discussion/' + messageId)
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/discussion/' + messageId)
+      .map(response => response.json());
+  }
+
+  deleteTeamMember(projectId: string, memberName: string){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/team/' + memberName)
+      .map(response => response.json());
+  }
+
+  deleteCategory(projectId: string, categoryName: string){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/categories/' + categoryName)
       .map(response => response.json());
   }
 

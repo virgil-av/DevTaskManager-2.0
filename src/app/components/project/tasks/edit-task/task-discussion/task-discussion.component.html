@@ -29,7 +29,7 @@
   <div *ngIf="task.discussion">
   <div *ngFor="let message of task.discussion" class="row">
     <div class="col-md-2 text-center">
-      <div><img src="assets/images/profile.png" class="profile-image"></div>
+      <div><img [src]="getProfilePic(message.author)" class="profile-image"></div>
       <div>{{message.author}}</div>
     </div>
     <div class="col-md-10">

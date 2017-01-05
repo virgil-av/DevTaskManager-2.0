@@ -39,7 +39,7 @@
 
       <button *ngIf="router.isActive('/project/' + selectedProject.id + '/dashboard')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteProject">Delete</button>
 
-      <button *ngIf="router.isActive('/project/' + selectedProject.id + '/team')" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addToTeam">
+      <button (click)="getContacts()" *ngIf="router.isActive('/project/' + selectedProject.id + '/team')" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addToTeam">
       <i class="glyphicon glyphicon-plus"></i>
       Add From Contacts
       </button>
@@ -52,10 +52,8 @@
     </span>
 
   </div>
-
   <!-- Page Content -->
   <div id="page-content-wrapper">
-
     <div class="container-fluid">
       <div class="row">
         <router-outlet></router-outlet>

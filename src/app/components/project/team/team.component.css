@@ -1,0 +1,25 @@
+.inner-page-wrapper{
+  height: calc(100vh - 145px);
+  max-height: calc(100vh - 145px);
+  max-width: 100%;
+  border-top: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 20px 0px auto 0px;
+}
+
+.inner-page-wrapper::-webkit-scrollbar {
+  -webkit-appearance: none;
+  height: 7px;
+  width: 5px;
+  background: #dfe5ed;
+  border-radius: 0
+}
+.inner-page-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #000
+}
+
+table{
+  background-color: #ffffff;
+}

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {DatabaseService} from "../../../services/database.service";
-import {Auth} from "../../../services/auth0.service";
 import {ActivatedRoute} from "@angular/router";
 
 import * as _ from 'lodash';
+import {Auth} from "../../../services/auth0.service";
 declare let $:any;
 
 @Component({
@@ -16,7 +16,10 @@ export class TasksComponent implements OnInit {
   isLoading: boolean = false;
   selectedTask: any;
   projectId: string;
+  projectTeam: any[] = [];
+  projectCategories: any[] = [];
   tasks: any[] = [];
+  contactsList: any[] = [];
   anyError: Error;
   sortBy: string = '-date';
   rowsPerPage: number = 20;
@@ -24,14 +27,23 @@ export class TasksComponent implements OnInit {
 
 
 
-  constructor(private db: DatabaseService, private auth: Auth, private activatedRoute: ActivatedRoute) {
+  constructor(private db: DatabaseService, private activatedRoute: ActivatedRoute, private auth: Auth) {
     this.activatedRoute.parent.params
       .map(params => params['id'])
       .subscribe(id => {
           this.projectId = id;
+          this.db.getProjectTeam(id).subscribe(team => this.projectTeam = team, error => this.anyError = error);
+          this.db.getProjectCategories(id).subscribe(categories => this.projectCategories = categories, error => this.anyError = error);
         },
         error => this.anyError = error
       );
+
+    this.auth.getListOfUsers().subscribe(contacts => {
+        this.contactsList = contacts;
+        console.log("auth contacts request")
+      }, error => this.anyError = error
+    )
+
   }
 
   ngOnInit() {
@@ -43,12 +55,11 @@ export class TasksComponent implements OnInit {
 
   updateTasksTable($event) {
     this.tasks.push($event);
-
   }
 
 
   sort(type) {
-    this.sortVariable = !this.sortVariable
+    this.sortVariable = !this.sortVariable;
 
     if (this.sortVariable) {
       this.sortBy = '-' + type;

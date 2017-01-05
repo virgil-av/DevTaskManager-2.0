@@ -82,10 +82,9 @@
                aria-haspopup="true" aria-expanded="false"></i>
 
             <div class="dropdown-menu" aria-labelledby="taskMenu">
-              <a (click)="openTask(task, 'view')" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editTask">View</a>
-              <a (click)="openTask(task, 'edit')" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editTask">Edit</a>
+              <a (click)="openTask(task, 'edit')" class="btn btn-primary btn-xs btn-block" data-toggle="modal" data-target="#editTask">Edit</a>
               <div role="separator" class="divider"></div>
-              <a (click)="openTask(task, 'delete')" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteTask">Delete Task</a>
+              <a (click)="openTask(task, 'delete')" class="btn btn-danger btn-xs btn-block" data-toggle="modal" data-target="#deleteTask">Delete Task</a>
 
             </div>
           </div>
@@ -113,14 +112,14 @@
           {{task.priority}}
         </td>
         <td align="center">
-        <span *ngIf="task.discussion == ''" (click)="getTaskToEdit(task)" class="fa fa-plus" aria-hidden="true"
-              data-toggle="modal" data-target="#editTask"></span>
-          <span *ngIf="task.discussion != ''" (click)="getTaskToEdit(task)" class="fa fa-weixin" aria-hidden="true"
+          <span (click)="openTask(task, 'view')" class="fa"
+                [ngClass]="{'fa-plus': !task.discussion,'fa-weixin': task.discussion}"
                 data-toggle="modal" data-target="#editTask"></span>
         </td>
         <td align="center">
+
           <span *ngIf="task.comment == ''">--</span>
-          <span *ngIf="task.comment != ''" class="glyphicon glyphicon-comment" (click)="readComment(task.comment)"
+          <span *ngIf="task.comment != ''" class="glyphicon glyphicon-comment"
                 data-toggle="modal" data-target="#editTask"></span>
         </td>
       </tr>
@@ -131,27 +130,23 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
+
+
+
+
 
 <!--ADD TASK MODAL-->
 
-<app-add-task [projectId]="projectId" (updateTasks)="updateTasksTable($event)"></app-add-task>
+<app-add-task [projectId]="projectId" [categoryList]="projectCategories" [userList]="projectTeam" (updateTasks)="updateTasksTable($event)"></app-add-task>
 
 <!--EDIT TASK MODAL-->
-<app-edit-task [selectedTask]="selectedTask" [projectId]="projectId" (updateTasks)="updateTasks($event)"></app-edit-task>
+<app-edit-task [selectedTask]="selectedTask"
+               [projectId]="projectId"
+               [categoryList]="projectCategories"
+               [userList]="projectTeam"
+               [contactsList]="contactsList"
+               (updateTasks)="updateTasks($event)"></app-edit-task>
 
 
 <!-- CONFIRM DELETE MODAL -->

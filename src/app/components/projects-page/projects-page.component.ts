@@ -36,12 +36,15 @@ export class ProjectsPageComponent implements OnInit {
       "colorId": this.getRandomColor(),
       "description": [''],
       "id": this.db.generateUniqueId(),
-      "createdBy": this.auth.loggedUserName()
+      "createdBy": this.auth.loggedUserName(),
+      "team": [[{"name": this.auth.loggedUserName()}]]
     })
   }
 
   ngOnInit() {
     this.db.getAllProjects().subscribe(response =>{
+        console.log(response)
+
       this.allProjects = response;
       this.pcService.sendProjectsList(response);
     },
@@ -55,7 +58,9 @@ export class ProjectsPageComponent implements OnInit {
       "creationDate": new Date(),
       "colorId": this.getRandomColor(),
       "projectName": '',
-      "description": ''
+      "description": '',
+      "createdBy": this.auth.loggedUserName(),
+      "team": [{"name": this.auth.loggedUserName()}]
     });
   }
 

@@ -2,7 +2,6 @@ import {Component, Input, OnChanges, OnInit, Output, EventEmitter} from "@angula
 import {FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {DatabaseService} from "../../../../services/database.service";
 import {taskSettings} from "../../../../dependencies/add-task.settings";
-import {ActivatedRoute} from "@angular/router";
 import * as _ from "lodash";
 
 declare let $: any;
@@ -16,23 +15,20 @@ export class EditTaskComponent implements OnInit, OnChanges {
 
   editTaskForm: FormGroup;
   taskSettings: any;
-  userList: any[] = [];
-  categoryList: any[] = [];
-  anyError: Error;
+  @Input() userList: any[];
+  @Input() categoryList: any[];
+  @Input() contactsList: any[];
   isLoading: boolean = false;
   @Input() projectId: string;
   @Input() selectedTask: any;
   @Output() updateTasks: EventEmitter<any> = new EventEmitter;
 
-  constructor(private db: DatabaseService, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {
+  constructor(private db: DatabaseService, private formBuilder: FormBuilder) {
 
   }
 
   ngOnInit() {
     this.taskSettings = taskSettings;
-    this.db.getCategory().subscribe(category => this.categoryList = category, error => this.anyError = error);
-    this.db.getUsers().subscribe(user => this.userList = user, error => this.anyError = error);
-
   }
 
   ngOnChanges() {

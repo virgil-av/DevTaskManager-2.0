@@ -5,6 +5,7 @@ import {ProjectsPageComponent} from "./components/projects-page/projects-page.co
 import {ProjectComponent} from "./components/project/project.component";
 import {PROJECT_ROUTES} from "./components/project/project.routes";
 import {ContactsPageComponent} from "./components/contacts-page/contacts-page.component";
+import {ActivityPageComponent} from "./components/activity-page/activity-page.component";
 
 
 
@@ -25,6 +26,9 @@ const routes: Routes = [
   },
   {
     path: 'contacts', component: ContactsPageComponent
+  },
+  {
+    path: 'activity', component: ActivityPageComponent
   },
   {
     path: '**', redirectTo: ''

@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
-import {DatabaseService} from "../../services/database.service";
 import * as _ from "lodash";
 import {Auth} from "../../services/auth0.service";
 import {myConfig} from "../../dependencies/auth.config";
@@ -16,7 +15,7 @@ export class ContactsPageComponent implements OnInit {
 
   formAddContact: FormGroup;
   formEditContact: FormGroup;
-  anyErrors: Error;
+  anyError: Error;
   isLoading: boolean = false;
   contactsList: any[];
   selectedUser = {id: '', name: '', role: ''};
@@ -88,7 +87,7 @@ export class ContactsPageComponent implements OnInit {
       .subscribe(users => {
           this.contactsList = users;
         },
-        error => this.anyErrors = error
+        error => this.anyError = error
       );
   }
 
@@ -118,7 +117,7 @@ export class ContactsPageComponent implements OnInit {
 
         this.isLoading = false;
       },
-        error => this.anyErrors = error
+        error => this.anyError = error
       )
   }
 
@@ -161,7 +160,7 @@ export class ContactsPageComponent implements OnInit {
 
           this.isLoading = false;
         },
-        error => this.anyErrors = error
+        error => this.anyError = error
       )
 
   }
@@ -181,7 +180,7 @@ export class ContactsPageComponent implements OnInit {
       .subscribe( () => {
           this.isLoading = false;
         },
-        error => this.anyErrors = error
+        error => this.anyError = error
       )
 
   }

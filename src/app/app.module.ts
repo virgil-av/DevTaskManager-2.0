@@ -30,6 +30,7 @@ import { TaskTestersComponent } from './components/project/tasks/edit-task/task-
 import { ContactsPageComponent } from './components/contacts-page/contacts-page.component';
 import { TeamComponent } from './components/project/team/team.component';
 import { CategoriesComponent } from './components/project/categories/categories.component';
+import { ActivityPageComponent } from './components/activity-page/activity-page.component';
 
 
 
@@ -55,6 +56,7 @@ import { CategoriesComponent } from './components/project/categories/categories.
     ContactsPageComponent,
     TeamComponent,
     CategoriesComponent,
+    ActivityPageComponent,
 
   ],
   imports: [

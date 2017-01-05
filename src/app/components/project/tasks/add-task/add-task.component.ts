@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatabaseService} from "../../../../services/database.service";
 import {Auth} from "../../../../services/auth0.service";
 import {taskSettings} from "../../../../dependencies/add-task.settings";
-import {ActivatedRoute} from "@angular/router";
 
 declare let $:any;
 
@@ -14,25 +13,21 @@ declare let $:any;
 })
 export class AddTaskComponent implements OnInit {
 
-  anyError: Error;
   isLoading: boolean = false;
   addTaskForm: FormGroup;
   loggedUserName: string;
-  userList: any[] = [];
-  categoryList: any[] = [];
+  @Input() userList: any[];
+  @Input() categoryList: any[];
   taskSettings:any;
   @Input() projectId: string;
   @Output() updateTasks: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(private formBuilder: FormBuilder, private db: DatabaseService, private auth: Auth, private activatedRoute: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private db: DatabaseService, private auth: Auth) { }
 
   ngOnInit() {
 
     this.taskSettings = taskSettings;
-    this.db.getCategory().subscribe(category => this.categoryList = category, error => this.anyError = error);
-    this.db.getUsers().subscribe(user => this.userList = user, error => this.anyError = error);
-
 
     this.loggedUserName = this.auth.loggedUserName();
 

@@ -153,7 +153,7 @@ html {
   #page-content-wrapper {
     padding: 20px;
     position: relative;
-    background-color: #eaeff5;
+    background-color: transparent;
   }
 
   #wrapper.toggled #page-content-wrapper {
