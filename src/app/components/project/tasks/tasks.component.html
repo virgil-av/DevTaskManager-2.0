@@ -1,5 +1,17 @@
-<div class="inner-page-wrapper">
+<div class="row">
+  <div class="col-md-12">
+    <app-filter-toolbar [categoryList]="projectCategories"
+                        [userList]="projectTeam"
+                        [rowsDefault]="rowsPerPage"
+                        (rowsPerPage)="rowsPerPage = $event"
+                        (searchTerm)="filterQuery = $event">
 
+    </app-filter-toolbar>
+  </div>
+</div>
+
+
+<div class="inner-page-wrapper">
 
   <div *ngIf="!anyErrors">
     <table class="table table-bordered table-condensed">
@@ -63,7 +75,7 @@
       <tbody>
       <!--ROW SETUP, filter is for search, orderBy is for column sort, paginate is for pagination-->
       <tr
-        *ngFor="let task of tasks | tableSorting:[sortBy] | paginate: { itemsPerPage: rowsPerPage, currentPage: p }"
+        *ngFor="let task of (tasks | filter: filterQuery) | tableSorting:[sortBy] | paginate: { itemsPerPage: rowsPerPage, currentPage: p }"
 
         [ngClass]="{
       completed: task.status == 'Completed',
@@ -84,14 +96,14 @@
             <div class="dropdown-menu" aria-labelledby="taskMenu">
               <a (click)="openTask(task, 'edit')" class="btn btn-primary btn-xs btn-block" data-toggle="modal" data-target="#editTask">Edit</a>
               <div role="separator" class="divider"></div>
-              <a (click)="openTask(task, 'delete')" class="btn btn-danger btn-xs btn-block" data-toggle="modal" data-target="#deleteTask">Delete Task</a>
+              <a (click)="openTask(task, 'delete')" class="btn btn-danger btn-xs btn-block" data-toggle="modal" data-target="#deleteTask">Delete</a>
 
             </div>
           </div>
           <!--ROW MENU END-->
         </td>
 
-        <td>{{task.title | capitalize | substring}}</td>
+        <td>{{task.title | capitalize | substring:'40'}}</td>
         <td>{{task.date | timeAgo}}</td>
         <td>{{task.category}}</td>
         <td>{{task.author}}</td>
@@ -112,15 +124,15 @@
           {{task.priority}}
         </td>
         <td align="center">
-          <span (click)="openTask(task, 'view')" class="fa"
+          <span (click)="openTask(task, 'discussion')" class="fa"
                 [ngClass]="{'fa-plus': !task.discussion,'fa-weixin': task.discussion}"
                 data-toggle="modal" data-target="#editTask"></span>
         </td>
         <td align="center">
 
           <span *ngIf="task.comment == ''">--</span>
-          <span *ngIf="task.comment != ''" class="glyphicon glyphicon-comment"
-                data-toggle="modal" data-target="#editTask"></span>
+          <span (click)="openTask(task, 'comment')" *ngIf="task.comment != ''" class="glyphicon glyphicon-comment"
+                data-toggle="modal" data-target="#showComment"></span>
         </td>
       </tr>
       </tbody>
@@ -128,6 +140,7 @@
     <div class="ng2-pagination pull-right">
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
+
   </div>
 
 </div>
@@ -146,8 +159,12 @@
                [categoryList]="projectCategories"
                [userList]="projectTeam"
                [contactsList]="contactsList"
+               [displayState]="displayState"
                (updateTasks)="updateTasks($event)"></app-edit-task>
 
+
+<!--SHOW TASK COMMENT MODAL (MARKDOWN) -->
+<app-task-comment [selectedTask]="selectedTask"></app-task-comment>
 
 <!-- CONFIRM DELETE MODAL -->
 <div class="modal fade" id="deleteTask" tabindex="-1" role="dialog" aria-labelledby="deleteTaskLabel">

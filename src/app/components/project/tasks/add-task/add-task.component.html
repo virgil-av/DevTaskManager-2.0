@@ -2,19 +2,20 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="addTaskLabel">Add New Task</h4>
       </div>
       <div class="modal-body">
 
-
-
         <form [formGroup]="addTaskForm" (ngSubmit)="createTask()">
           <div>
-            <div class="form-group" [class.has-error]="addTaskForm.controls.title.dirty && (addTaskForm.controls.title.errors != null)">
+            <div class="form-group"
+                 [class.has-error]="addTaskForm.controls.title.dirty && (addTaskForm.controls.title.errors != null)">
               <label>Title:</label>
               <input type="text" class="form-control" formControlName="title" placeholder="A descriptive title...">
-              <span class="text-danger" *ngIf="addTaskForm.controls.title.dirty && (addTaskForm.controls.title.errors != null)">Minimum length for your title is 5 characters.</span>
+              <span class="text-danger"
+                    *ngIf="addTaskForm.controls.title.dirty && (addTaskForm.controls.title.errors != null)">Minimum length for your title is 5 characters.</span>
             </div>
 
             <div class="form-group" *ngIf="taskSettings">
@@ -50,20 +51,18 @@
             <div class="form-group">
               <label>Comment:</label>
               <textarea class="form-control" formControlName="comment"
-                        placeholder="Providing that extra information is always a better choice."></textarea>
+                        placeholder="Markdown supported."></textarea>
             </div>
 
           </div>
         </form>
 
-
-
-
       </div>
       <div class="modal-footer">
         <div class="pull-left"><span class="text-danger">* Required</span></div>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button [disabled]="addTaskForm.invalid" (click)="createTask()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
+        <button [disabled]="addTaskForm.invalid" (click)="createTask()" type="button" class="btn"
+                [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
           <span *ngIf="isLoading === false">Add Task</span>
           <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
         </button>

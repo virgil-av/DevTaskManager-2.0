@@ -15,6 +15,7 @@ export class TasksComponent implements OnInit {
 
   isLoading: boolean = false;
   selectedTask: any;
+  displayState: string;
   projectId: string;
   projectTeam: any[] = [];
   projectCategories: any[] = [];
@@ -22,8 +23,9 @@ export class TasksComponent implements OnInit {
   contactsList: any[] = [];
   anyError: Error;
   sortBy: string = '-date';
-  rowsPerPage: number = 20;
+  rowsPerPage: number = 15;
   sortVariable; // used as toggle for table column sorting
+  filterQuery = '' // used for the search
 
 
 
@@ -68,8 +70,9 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  openTask(task: any, actionState: string){
+  openTask(task: any, selectedState: string){
     this.selectedTask = task;
+    this.displayState = selectedState;
   }
 
   updateTasks(value){

@@ -11,8 +11,8 @@
         <div class="container-fluid">
           <!--MODAL BODY START-->
 
-          <!--EDIT-->
-          <div class="row">
+          <!--EDIT STATE-->
+          <div *ngIf="displayState === 'edit'" class="row">
             <form [formGroup]="editTaskForm" (ngSubmit)="editTask()">
               <div class="col-md-7">
                 <div class="form-group"
@@ -26,7 +26,7 @@
                 <div class="form-group">
                   <label>Comment:</label>
                   <textarea class="form-control" formControlName="comment" rows="7"
-                            placeholder="Providing that extra information is always a better choice."></textarea>
+                            placeholder="Markdown supported." #textarea></textarea>
                 </div>
               </div>
 
@@ -65,8 +65,8 @@
             </form>
           </div>
 
-          <!--TESTERS-->
-          <div class="row">
+          <!--TESTERS STATE-->
+          <div *ngIf="displayState === 'testers'" class="row">
             <div class="col-md-12">
               <div class="panel panel-info">
                 <div class="panel-heading">
@@ -79,22 +79,14 @@
             </div>
           </div>
 
-          <!--DISCUSSION-->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Discussion</h3>
-                </div>
-                <div class="panel-body">
-                  <app-task-discussion [task]="selectedTask"
-                                       [projectId]="projectId"
-                                       [contactsList]="contactsList">
+          <!--DISCUSSION STATE-->
+          <div *ngIf="displayState === 'discussion'" class="row">
+            <app-task-discussion [task]="selectedTask"
+                                 [projectId]="projectId"
+                                 [contactsList]="contactsList">
 
-                  </app-task-discussion>
-                </div>
-              </div>
-            </div>
+            </app-task-discussion>
+
           </div>
 
 

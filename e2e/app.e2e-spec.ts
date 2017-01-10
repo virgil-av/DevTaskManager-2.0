@@ -1,10 +1,10 @@
-import { DevTasksManagerPage } from './app.po';
+import { DevTaskManagerPage } from './app.po';
 
-describe('dev-tasks-manager App', function() {
-  let page: DevTasksManagerPage;
+describe('dev-task-manager App', function() {
+  let page: DevTaskManagerPage;
 
   beforeEach(() => {
-    page = new DevTasksManagerPage();
+    page = new DevTaskManagerPage();
   });
 
   it('should display message saying app works', () => {

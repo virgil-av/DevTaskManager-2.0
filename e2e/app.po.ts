@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class DevTasksManagerPage {
+export class DevTaskManagerPage {
   navigateTo() {
     return browser.get('/');
   }

@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { Http, HttpModule, RequestOptions } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+
 
 import { AppComponent } from './app.component';
-import {AUTH_PROVIDERS} from "angular2-jwt";
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ProjectsPageComponent } from './components/projects-page/projects-page.component';
 import {AppRouting} from "./app.routing";
@@ -18,7 +19,6 @@ import { SubstringPipe } from './pipes/substring.pipe';
 import { ProjectComponent } from './components/project/project.component';
 import { DashboardComponent } from './components/project/dashboard/dashboard.component';
 import { TasksComponent } from './components/project/tasks/tasks.component';
-import {DragulaModule} from "ng2-dragula/ng2-dragula";
 import { TableSortingPipe } from './pipes/table-sorting.pipe';
 import {Ng2PaginationModule} from 'ng2-pagination';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
@@ -31,8 +31,14 @@ import { ContactsPageComponent } from './components/contacts-page/contacts-page.
 import { TeamComponent } from './components/project/team/team.component';
 import { CategoriesComponent } from './components/project/categories/categories.component';
 import { ActivityPageComponent } from './components/activity-page/activity-page.component';
+import { MarkdownPipe } from './pipes/markdown.pipe';
+import { TaskCommentComponent } from './components/project/tasks/task-comment/task-comment.component';
+import { FilterToolbarComponent } from './components/project/tasks/filter-toolbar/filter-toolbar.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
-
+export function AuthHttpFactory (http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig(), http, options);
+}
 
 @NgModule({
   declarations: [
@@ -57,6 +63,10 @@ import { ActivityPageComponent } from './components/activity-page/activity-page.
     TeamComponent,
     CategoriesComponent,
     ActivityPageComponent,
+    MarkdownPipe,
+    TaskCommentComponent,
+    FilterToolbarComponent,
+    FilterPipe
 
   ],
   imports: [
@@ -65,10 +75,18 @@ import { ActivityPageComponent } from './components/activity-page/activity-page.
     ReactiveFormsModule,
     HttpModule,
     AppRouting,
-    DragulaModule,
     Ng2PaginationModule
   ],
-  providers: [AUTH_PROVIDERS, Auth, DatabaseService, ParentChildrenService],
+  providers: [
+    {
+    provide: AuthHttp,
+    deps: [Http, RequestOptions],
+    useFactory: AuthHttpFactory
+    },
+    Auth,
+    DatabaseService,
+    ParentChildrenService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

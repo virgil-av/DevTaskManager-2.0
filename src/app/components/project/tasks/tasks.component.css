@@ -1,11 +1,9 @@
 .inner-page-wrapper{
-  background: #ffffff;
-  height: calc(100vh - 145px);
-  max-height: calc(100vh - 145px);
+  height: calc(100vh - 200px);
+  max-height: calc(100vh - 200px);
   max-width: 100%;
-  border: 1px solid #d2ddeb;
   border-top: none;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: auto;
 }
 
@@ -25,6 +23,8 @@
 
 th{ resize: horizontal; overflow: auto; }
 
+table {background-color: #ffffff;}
+
 
 
 .glyphicon.glyphicon-option-vertical.dropdown-toggle:hover{
@@ -43,14 +43,14 @@ th{ resize: horizontal; overflow: auto; }
 }
 
 .dropup .dropdown-menu,
-.navbar-fixed-bottom .dropdown .dropdown-menu {
+  .dropdown .dropdown-menu {
   top: -35px;
   bottom: auto;
   left: 25px;
   right: auto;
   margin-bottom: 2px;
 
-  width: 175px;
+  min-width: 100px;
   padding: 10px 6px 10px 6px;
 
   background: linear-gradient(#333, #222);
@@ -201,3 +201,4 @@ pagination-controls /deep/ .ng2-pagination span:hover {
   color: #cccccc;
   font-weight: bold;
 }
+
