@@ -10,7 +10,7 @@ interface Settings {
 
 
 export const dbSettings: Settings = {
-  dbUrl: 'https://avram-virgil-project.getsandbox.com',
+  dbUrl: 'https://apitest-123456.getsandbox.com',
   dbList: '/list',
   dbProjects: '/projects',
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DatabaseService} from "../../../services/database.service";
 import {ActivatedRoute} from "@angular/router";
+import {TaskSettings} from "../../../dependencies/task.settings";
 
 import * as _ from 'lodash';
 import {Auth} from "../../../services/auth0.service";
@@ -13,50 +14,49 @@ declare let $:any;
 })
 export class TasksComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading: boolean = true;
+  taskSettings: any;
   selectedTask: any;
   displayState: string;
   projectId: string;
   projectTeam: any[] = [];
   projectCategories: any[] = [];
-  tasks: any[] = [];
-  contactsList: any[] = [];
+  tasks: any[];
+  isTasksEmpty: boolean = false;
   anyError: Error;
   sortBy: string = '-date';
   rowsPerPage: number = 15;
   sortVariable; // used as toggle for table column sorting
-  filterQuery = '' // used for the search
+  filterQuery = ''; // used for the search
 
 
 
   constructor(private db: DatabaseService, private activatedRoute: ActivatedRoute, private auth: Auth) {
     this.activatedRoute.parent.params
       .map(params => params['id'])
-      .subscribe(id => {
-          this.projectId = id;
-          this.db.getProjectTeam(id).subscribe(team => this.projectTeam = team, error => this.anyError = error);
-          this.db.getProjectCategories(id).subscribe(categories => this.projectCategories = categories, error => this.anyError = error);
-        },
-        error => this.anyError = error
-      );
-
-    this.auth.getListOfUsers().subscribe(contacts => {
-        this.contactsList = contacts;
-        console.log("auth contacts request")
-      }, error => this.anyError = error
-    )
+      .subscribe(id => this.projectId = id, error => this.anyError = error);
 
   }
 
   ngOnInit() {
-    this.db.getTasks(this.projectId).subscribe(tasks => {
-      this.tasks = tasks;
-    })
+    this.taskSettings = TaskSettings;
+
+    this.db.getProject(this.projectId).subscribe(project => {
+        this.projectTeam = project.team;
+        this.projectCategories = project.categories;
+        this.tasks = project.tasks;
+        this.isLoading = false;
+
+        this.isTasksEmpty = _.isEmpty(project.tasks);
+      },
+      error => this.anyError = error
+    );
 
   }
 
   updateTasksTable($event) {
     this.tasks.push($event);
+    this.isTasksEmpty = false;
   }
 
 
@@ -90,6 +90,7 @@ export class TasksComponent implements OnInit {
         id: id
       });
         this.isLoading = false;
+        this.isTasksEmpty = _.isEmpty(this.tasks);
         $('#deleteTask').modal('hide');
     },
     error => this.anyError = error

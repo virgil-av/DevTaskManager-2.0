@@ -13,7 +13,7 @@
                 <div class="separator"></div>
                 <h3>4/5</h3>
                 <div class="progress progress-striped active">
-                  <div class="progress-bar" style="width: 45%"></div>
+                  <div class="progress-bar" [ngStyle]="{width: 4/4*100 + '%'}"></div>
                 </div>
                 <div class="separator"></div>
                 <a class="btn btn-primary btn-sm">View Tasks</a>
@@ -28,7 +28,7 @@
 
                 <table class="table table-hover table-bordered table-condensed">
                   <tr>
-                    <td>a</td>
+                    <td><span data-tooltip="I’m the tooltip text.">I’m a link with a tooltip.</span></td>
                     <td>a</td>
                   </tr>
                   <tr>

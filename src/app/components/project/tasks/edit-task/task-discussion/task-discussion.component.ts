@@ -14,7 +14,7 @@ export class TaskDiscussionComponent implements OnInit{
 
   addMessageForm: FormGroup;
   discussion: any[] = [];
-  @Input() contactsList: any[];
+  contactsList: any[];
   anyError: Error;
   @Input() projectId: string;
   @Input() task: any;
@@ -32,6 +32,12 @@ export class TaskDiscussionComponent implements OnInit{
       "edited": false
     });
 
+    this.auth.getListOfUsers().subscribe(contacts => {
+        this.contactsList = contacts;
+        console.log("auth contacts request")
+      }, error => this.anyError = error
+    )
+
 
   }
 
@@ -40,7 +46,6 @@ export class TaskDiscussionComponent implements OnInit{
     this.db.createNewTaskMessage(this.addMessageForm.value, this.projectId, this.task.id)
       .subscribe(response =>{
 
-        console.log(response)
         this.task.discussion.push(response);
 
         this.addMessageForm.reset({

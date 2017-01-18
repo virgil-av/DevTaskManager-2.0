@@ -74,9 +74,7 @@ export class Auth{
   };
 
   public isAdmin() {
-    return this.userProfile && this.userProfile.app_metadata
-      && this.userProfile.app_metadata.roles
-      && this.userProfile.app_metadata.roles.indexOf('admin') > -1;
+    return this.userProfile && this.userProfile.roles.indexOf('admin') > -1;
   }
 
   public loggedUserName(){

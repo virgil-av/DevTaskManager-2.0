@@ -1,5 +1,5 @@
 import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
-import {taskSettings} from "../../../../dependencies/task.settings";
+import {TaskSettings} from "../../../../dependencies/task.settings";
 
 @Component({
   selector: 'app-filter-toolbar',
@@ -19,7 +19,7 @@ export class FilterToolbarComponent implements OnInit {
   @Output() searchTerm: EventEmitter<any> = new EventEmitter;
 
   ngOnInit() {
-    this.taskSettings = taskSettings;
+    this.taskSettings = TaskSettings;
   }
 
   emitRows() {
@@ -28,7 +28,13 @@ export class FilterToolbarComponent implements OnInit {
 
   emitSearch(value) {
     this.searchTerm.emit(value);
-    this.showReset = true;
+
+    if(value !== ""){
+      this.showReset = true;
+    }else if(value === ""){
+      this.showReset = false;
+    }
+
   }
 
   resetForm(form) {

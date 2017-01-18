@@ -1,0 +1,46 @@
+.glyphicon:hover{
+  color: #ff4500;
+}
+
+.panel-heading{
+  cursor: pointer;
+}
+
+div.progress {
+  height: 20px;
+  border-radius: 0;
+  margin-bottom: 1px;
+  margin-top: 5px;
+}
+
+div.progress.active .progress-bar {
+-webkit-animation: progress-bar-stripes 500ms linear infinite;
+-o-animation: progress-bar-stripes 500ms linear infinite;
+animation: progress-bar-stripes 500ms linear infinite;
+background-size: 20px 20px;
+}
+
+@-webkit-keyframes progress-bar-stripes {
+from {
+background-position: 20px 0;
+}
+to {
+background-position: 0 0;
+}
+}
+@-o-keyframes progress-bar-stripes {
+from {
+background-position: 20px 0;
+}
+to {
+background-position: 0 0;
+}
+}
+@keyframes progress-bar-stripes {
+from {
+background-position: 20px 0;
+}
+to {
+background-position: 0 0;
+}
+}

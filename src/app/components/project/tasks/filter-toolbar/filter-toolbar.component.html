@@ -1,58 +1,60 @@
 <div class="row">
 
-  <div class="col-md-11">
+  <div class="col-md-8 toolbar">
 
     <form class="form-inline input-group-sm" (ngSubmit)="resetForm(messageForm)" #messageForm="ngForm">
 
-      <div class="form-group">
+      <div class="form-group spacer">
         <input (keyup)="emitSearch(search.value)" type="text" class="form-control" ngModel name="search" placeholder="Search for..." #search>
       </div>
 
-      <div class="form-group">
+      <div class="form-group spacer">
         <div *ngIf="categoryList">
-          <select class="form-control" ngModel name="category" (click)="emitSearch(category.value)" #category>
+          <select class="form-control" ngModel name="category" (change)="emitSearch(category.value)" #category>
             <option value="" elected>Category:</option>
             <option *ngFor="let category of categoryList" value="{{category.name}}">{{category.name}}</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group spacer">
         <div *ngIf="userList">
-          <select class="form-control" ngModel name="user" (click)="emitSearch(name.value)" #name>
+          <select class="form-control" ngModel name="user" (change)="emitSearch(name.value)" #name>
             <option value="" selected>Name:</option>
             <option *ngFor="let user of userList" value="{{user.name}}">{{user.name}}</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group spacer">
         <div *ngIf="taskSettings">
-          <select class="form-control" ngModel name="status" (click)="emitSearch(status.value)" #status>
+          <select class="form-control" ngModel name="status" (change)="emitSearch(status.value)" #status>
             <option value="" selected>Status:</option>
             <option *ngFor="let status of taskSettings.status" value="{{status}}">{{status}}</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group spacer">
         <div *ngIf="taskSettings">
-          <select class="form-control" ngModel name="priority" (click)="emitSearch(priority.value)" #priority>
+          <select class="form-control" ngModel name="priority" (change)="emitSearch(priority.value)" #priority>
             <option value="" selected>Priority:</option>
             <option *ngFor="let priority of taskSettings.priority" value="{{priority}}">{{priority}}</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group">
-        <button *ngIf="showReset" class="btn btn-default btn-xs" type="submit"><span class="text-danger">Reset</span></button>
+      <div class="form-group spacer">
+        <button *ngIf="showReset" class="btn btn-default btn-xs" type="submit"><span class="text-danger">x</span></button>
       </div>
 
 
     </form>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-md-3"></div>
+
+  <div class="col-md-1 toolbar">
     <select class="form-control" [(ngModel)]="rowsDefault" (click)="emitRows()">
       <option value="5">5</option>
       <option value="10">10</option>
@@ -60,7 +62,6 @@
       <option value="20">20</option>
       <option value="50">50</option>
     </select>
-    <br>
   </div>
 
 

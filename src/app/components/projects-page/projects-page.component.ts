@@ -37,7 +37,8 @@ export class ProjectsPageComponent implements OnInit {
       "description": [''],
       "id": this.db.generateUniqueId(),
       "createdBy": this.auth.loggedUserName(),
-      "team": [[{"name": this.auth.loggedUserName()}]]
+      "team": [[{"name": this.auth.loggedUserName()}]],
+      "tasks": formBuilder.array([])
     })
   }
 
@@ -60,7 +61,8 @@ export class ProjectsPageComponent implements OnInit {
       "projectName": '',
       "description": '',
       "createdBy": this.auth.loggedUserName(),
-      "team": [{"name": this.auth.loggedUserName()}]
+      "team": [{"name": this.auth.loggedUserName()}],
+      "tasks":[]
     });
   }
 

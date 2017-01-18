@@ -33,6 +33,7 @@ export class ProjectComponent implements OnInit {
       .subscribe((id) => {
         this.db.getProjectSummary(id).subscribe(response =>{
             this.selectedProject = response;
+            console.log(response);
           },
           error => this.anyError = error
         )

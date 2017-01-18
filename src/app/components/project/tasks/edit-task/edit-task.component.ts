@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, Output, EventEmitter, ViewChild} from "@angular/core";
 import {FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {DatabaseService} from "../../../../services/database.service";
-import {taskSettings} from "../../../../dependencies/task.settings";
+import {TaskSettings} from "../../../../dependencies/task.settings";
 import * as _ from "lodash";
 
 declare let $: any;
@@ -18,7 +18,6 @@ export class EditTaskComponent implements OnInit, OnChanges {
   taskSettings: any;
   @Input() userList: any[];
   @Input() categoryList: any[];
-  @Input() contactsList: any[];
   @Input() displayState: string;
   isLoading: boolean = false;
   @Input() projectId: string;
@@ -30,7 +29,7 @@ export class EditTaskComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.taskSettings = taskSettings;
+    this.taskSettings = TaskSettings;
   }
 
   ngOnChanges() {

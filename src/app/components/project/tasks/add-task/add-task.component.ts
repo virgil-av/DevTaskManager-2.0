@@ -2,7 +2,7 @@ import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatabaseService} from "../../../../services/database.service";
 import {Auth} from "../../../../services/auth0.service";
-import {taskSettings} from "../../../../dependencies/task.settings";
+import {TaskSettings} from "../../../../dependencies/task.settings";
 
 declare let $:any;
 
@@ -27,7 +27,7 @@ export class AddTaskComponent implements OnInit {
 
   ngOnInit() {
 
-    this.taskSettings = taskSettings;
+    this.taskSettings = TaskSettings;
 
     this.loggedUserName = this.auth.loggedUserName();
 

@@ -1,0 +1,112 @@
+<!-- Modal -->
+<div class="modal fade" id="testingDetails" tabindex="-1" role="dialog" aria-labelledby="testingDetailsLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="testingDetailsLabel"></h4>
+      </div>
+      <div *ngIf="selectedTask" class="modal-body">
+        <div class="container-fluid">
+          <!--MODAL BODY START-->
+
+          <!--TESTER TEAM-->
+          <div class="panel panel-default">
+            <div (click)="toggle('testers')" class="panel-heading">
+              <span>Testing Team</span>
+              <span class="pull-right">
+                <i
+                  class="glyphicon"
+                  [ngClass]="
+                    {
+                        'glyphicon-chevron-down': !isToggled || isExpanded === 'discussion',
+                        'glyphicon-chevron-up': isToggled && isExpanded === 'testers'
+                    }">
+              </i>
+              </span>
+            </div>
+            <div *ngIf="isToggled && isExpanded === 'testers'" class="panel-body">
+              <app-task-testers [selectedTask]="selectedTask"
+                                [userList]="userList"
+                                [projectId]="projectId">
+
+              </app-task-testers>
+            </div>
+          </div>
+          <!--TESTER TEAM END-->
+
+          <!--TASK DISCUSSION-->
+          <div class="panel panel-default">
+            <div (click)="toggle('discussion')" class="panel-heading">
+              <span>Task Discussion</span>
+              <span class="pull-right">
+                <i
+                  class="glyphicon"
+                  [ngClass]="
+                    {
+                        'glyphicon-chevron-down': !isToggled || isExpanded === 'testers',
+                        'glyphicon-chevron-up': isToggled && isExpanded === 'discussion'
+                    }">
+              </i>
+              </span>
+            </div>
+            <div *ngIf="isToggled && isExpanded === 'discussion'" class="panel-body">
+              <app-task-discussion [task]="selectedTask"
+                                   [projectId]="projectId">
+
+              </app-task-discussion>
+            </div>
+          </div>
+          <!--TASK DISCUSSION END-->
+
+          <table class="table table-hover table-bordered table-condensed">
+            <thead>
+            <tr>
+              <th width="1%">#</th>
+              <th width="35%">Name</th>
+              <th width="40%">Progress</th>
+              <th width="24%">%</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="selectedTask">
+            <tr *ngFor="let tester of selectedTask.testers, let i = index">
+              <td>{{i+1}}</td>
+              <td>
+                {{tester.name}}
+              </td>
+              <td>
+                <div class="progress progress-striped active">
+                  <div class="progress-bar"
+                       [ngStyle]="{width: tester.progress + '%'}">
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="input-group input-group-sm">
+                      <input type="text" class="form-control" [value]="tester.progress" size="10" #progress>
+                      <span *ngIf="auth.loggedUserName() === tester.name || auth.isAdmin()" class="input-group-btn">
+                        &nbsp;
+                        <button (click)="modifyProgress(progress.value, tester.id)" class="btn btn-primary" type="button">
+                          Save
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!--MODAL BODY END-->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

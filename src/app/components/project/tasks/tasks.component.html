@@ -1,4 +1,25 @@
-<div class="row">
+<div *ngIf="isLoading || (!isLoading && isTasksEmpty)" class="row">
+  <div class="col-md-12">
+    <div *ngIf="isLoading" class="loading-box center-spinner text-info">
+      <loading-spinner [visible]="isLoading" [size]="'5x'"></loading-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && isTasksEmpty" class="no-tasks loading-box">
+      <div class="text-center">
+        <span class="text-warning h5"><strong>There are no tasks in this project!</strong></span>
+        <br>
+        <button class="btn btn-success" data-toggle="modal" data-target="#addTask">
+          <i class="glyphicon glyphicon-plus"></i>
+          Add Task
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row" *ngIf="!isLoading && !isTasksEmpty">
   <div class="col-md-12">
     <app-filter-toolbar [categoryList]="projectCategories"
                         [userList]="projectTeam"
@@ -11,7 +32,7 @@
 </div>
 
 
-<div class="inner-page-wrapper">
+<div class="inner-page-wrapper" *ngIf="!isLoading && !isTasksEmpty">
 
   <div *ngIf="!anyErrors">
     <table class="table table-bordered table-condensed">
@@ -65,18 +86,13 @@
         <th>D</th>
         <th>C</th>
       </tr>
-
-      <tr *ngIf="isLoading == true">
-        <td colspan="11">
-          <loading-spinner [visible]="isLoading"></loading-spinner>
-        </td>
-      </tr>
       </thead>
       <tbody>
       <!--ROW SETUP, filter is for search, orderBy is for column sort, paginate is for pagination-->
       <tr
-        *ngFor="let task of (tasks | filter: filterQuery) | tableSorting:[sortBy] | paginate: { itemsPerPage: rowsPerPage, currentPage: p }"
-
+        *ngFor="let task of (tasks | filter: filterQuery)
+        | tableSorting:[sortBy]
+        | paginate: { itemsPerPage: rowsPerPage, currentPage: p }"
         [ngClass]="{
       completed: task.status == 'Completed',
       workingonit: task.status == 'Working on It',
@@ -110,7 +126,9 @@
         <td>{{task.assignee}}</td>
         <td>{{task.status}}</td>
         <td>
-          <div *ngIf="task.status == 'Testing'"><span *ngFor="let tester of task.testers"><span class="name-initials">{{tester?.name | nameInitials}}</span>&nbsp;</span>
+          <div *ngIf="task.status === 'Testing'">
+            <a (click)="openTask(task, 'testing')" class="testing-menu" data-toggle="modal" data-target="#testingDetails"><i class="fa fa-cogs"></i></a>
+            <span *ngFor="let tester of task.testers"><span class="name-initials">{{tester.name | nameInitials}}</span>&nbsp;</span>
           </div>
 
         </td>
@@ -158,13 +176,19 @@
                [projectId]="projectId"
                [categoryList]="projectCategories"
                [userList]="projectTeam"
-               [contactsList]="contactsList"
                [displayState]="displayState"
                (updateTasks)="updateTasks($event)"></app-edit-task>
 
 
 <!--SHOW TASK COMMENT MODAL (MARKDOWN) -->
 <app-task-comment [selectedTask]="selectedTask"></app-task-comment>
+
+
+<!--SHOW TESTER DETAILS -->
+<app-testing-details [selectedTask]="selectedTask"
+                     [projectId]="projectId"
+                     [userList]="projectTeam"></app-testing-details>
+
 
 <!-- CONFIRM DELETE MODAL -->
 <div class="modal fade" id="deleteTask" tabindex="-1" role="dialog" aria-labelledby="deleteTaskLabel">

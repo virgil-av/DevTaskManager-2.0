@@ -1,0 +1,41 @@
+<form [formGroup]="formAddTester" (ngSubmit)="addToTesters()">
+  <div>
+
+    <div class="row">
+      <div class="col-md-8" *ngIf="userList">
+        <div class="form-group" [class.has-error]="formAddTester.controls.name.hasError('duplicate')">
+          <select class="form-control" formControlName="name">
+            <option value="" disabled>Click to select...</option>
+            <option *ngFor="let user of userList" value="{{user.name}}">{{user.name}}</option>
+          </select>
+          <span class="text-danger" *ngIf="formAddTester.controls.name.hasError('duplicate')">This user is already a member of this tester team.</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-block btn-success" [disabled]="formAddTester.invalid">Add!</button>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+
+<div *ngIf="selectedTask.testers">
+
+  <div class="row">
+    <div class="col-md-6" *ngFor="let tester of selectedTask.testers">
+
+        <div class="well well-sm">
+          <span class="name-initials">{{tester.name | nameInitials}}</span>
+          <span>{{tester.name}}</span>
+          <a (click)="removeTester(tester.id)" class="pull-right">
+            <i class="fa fa-times fa-lg"></i>
+          </a>
+        </div>
+
+    </div>
+  </div>
+
+</div>
+
+

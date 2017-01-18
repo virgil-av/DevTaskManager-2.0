@@ -26,7 +26,6 @@ import { AddTaskComponent } from './components/project/tasks/add-task/add-task.c
 import { NameInitialsPipe } from './pipes/name-initials.pipe';
 import { EditTaskComponent } from './components/project/tasks/edit-task/edit-task.component';
 import { TaskDiscussionComponent } from './components/project/tasks/edit-task/task-discussion/task-discussion.component';
-import { TaskTestersComponent } from './components/project/tasks/edit-task/task-testers/task-testers.component';
 import { ContactsPageComponent } from './components/contacts-page/contacts-page.component';
 import { TeamComponent } from './components/project/team/team.component';
 import { CategoriesComponent } from './components/project/categories/categories.component';
@@ -35,6 +34,9 @@ import { MarkdownPipe } from './pipes/markdown.pipe';
 import { TaskCommentComponent } from './components/project/tasks/task-comment/task-comment.component';
 import { FilterToolbarComponent } from './components/project/tasks/filter-toolbar/filter-toolbar.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import {TaskTestersComponent} from "./components/project/tasks/edit-task/add-testers/add-testers.component";
+import { TestingDetailsComponent } from './components/project/tasks/edit-task/testing-details/testing-details.component';
+
 
 export function AuthHttpFactory (http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig(), http, options);
@@ -66,7 +68,8 @@ export function AuthHttpFactory (http: Http, options: RequestOptions) {
     MarkdownPipe,
     TaskCommentComponent,
     FilterToolbarComponent,
-    FilterPipe
+    FilterPipe,
+    TestingDetailsComponent,
 
   ],
   imports: [

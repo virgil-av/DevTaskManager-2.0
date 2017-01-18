@@ -23,6 +23,7 @@ export class CategoriesComponent implements OnInit {
 
     this.formAddToCategory = formBuilder.group({
       "name": ['',Validators.required, this.isDuplicateCategory.bind(this)],
+      "id": [this.db.generateUniqueId()]
     });
   }
 
@@ -63,17 +64,17 @@ export class CategoriesComponent implements OnInit {
     this.db.addCategory(this.formAddToCategory.value,this.projectId)
       .subscribe(response =>{
           this.categoryList.push(response);
-          this.formAddToCategory.reset({"name":''});
+          this.formAddToCategory.reset({"name":'', "id": this.db.generateUniqueId()});
         },
         error => this.anyError = error
       )
   }
 
-  removeCategory(categoryName: string) {
-    this.db.deleteCategory(this.projectId, categoryName)
+  removeCategory(categoryId: string) {
+    this.db.deleteCategory(this.projectId, categoryId)
       .subscribe(() => {
           _.remove(this.categoryList, {
-            "name": categoryName
+            "id": categoryId
           });
         },
         error => this.anyError = error

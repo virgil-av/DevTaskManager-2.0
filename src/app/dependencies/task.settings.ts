@@ -1,4 +1,4 @@
-export const taskSettings = {
+export const TaskSettings = {
 
   priority: [
   "Low",

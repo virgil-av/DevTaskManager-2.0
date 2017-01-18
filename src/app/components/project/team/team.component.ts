@@ -26,6 +26,7 @@ export class TeamComponent implements OnInit {
 
     this.formAddToTeam = formBuilder.group({
       "name": ['', Validators.required,this.isDuplicateMember.bind(this)],
+      "id": [this.db.generateUniqueId()]
     });
   }
 
@@ -75,17 +76,17 @@ export class TeamComponent implements OnInit {
     this.db.addContactToTeam(this.formAddToTeam.value,this.projectId)
       .subscribe(response =>{
           this.teamList.push(response);
-          this.formAddToTeam.reset({"name":''});
+          this.formAddToTeam.reset({"name":'', "id": this.db.generateUniqueId()});
       },
         error => this.anyError = error
       )
   }
 
-  removeFromTeam(memberName: string){
-    this.db.deleteTeamMember(this.projectId,memberName)
+  removeFromTeam(memberId: string){
+    this.db.deleteTeamMember(this.projectId,memberId)
       .subscribe(() =>{
           _.remove(this.teamList, {
-            "name": memberName
+            "id": memberId
           });
         },
         error => this.anyError = error

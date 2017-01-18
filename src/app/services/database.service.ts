@@ -18,7 +18,6 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-
   createNewTask(body: any, id: string){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
@@ -47,6 +46,13 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
+  addUserToTaskTesters(body: any, projectId: string, taskId:string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/testers',JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
 
   addCategory(body: any, projectId: string){
     let headers = new Headers();
@@ -55,11 +61,21 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-
-
+  updateTestingProgress(body: any, projectId: string, taskId:string, testerId: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' +
+      taskId + '/testers/' + testerId,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
 
   getAllProjects(){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbList)
+      .map(response => response.json());
+  }
+
+  getProject(projectId: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId)
       .map(response => response.json());
   }
 
@@ -68,11 +84,6 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-
-  getTasks(projectId: string){
-    return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks')
-      .map(response => response.json());
-  }
 
   getProjectTeam(ProjectId: string){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + ProjectId + '/team')
@@ -102,6 +113,11 @@ export class DatabaseService {
 
   deleteTeamMember(projectId: string, memberName: string){
     return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/team/' + memberName)
+      .map(response => response.json());
+  }
+
+  deleteTester(projectId: string, taskId: string, testerId: string){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId + '/tasks/' + taskId + '/testers/' + testerId)
       .map(response => response.json());
   }
 

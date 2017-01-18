@@ -1,0 +1,14 @@
+.name-initials{
+  color: white;
+  background-color: orangered;
+  font-size: 10px;
+  padding: 3px 3px 3px 3px;
+}
+
+.fa-times{
+  color: #f08080;
+}
+
+.fa-times:hover{
+  color: #ff4500;
+}
