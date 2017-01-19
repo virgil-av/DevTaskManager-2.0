@@ -1,0 +1,22 @@
+.separator{
+  margin: 10px 1px 10px 1px;
+  border-bottom: 1px solid #cccccc;
+}
+
+div.progress {
+  height: 24px;
+  border-radius: 0;
+  margin-bottom: 1px;
+  margin-top: 5px;
+}
+
+.panel-custom{
+  min-height: 230px;
+}
+
+.panel-content{
+  min-height: 70px;
+}
+
+
+

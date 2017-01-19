@@ -5,57 +5,36 @@
       <div class="panel-body">
         <div class="row">
 
-          <div class="col-md-6">
+          <div class="col-md-4">
+            <!--<app-tasks-summary [projectSummary]="projectSummary"></app-tasks-summary>-->
+          </div>
+          <div class="col-md-4">
+            <!--<app-project-team [projectSummary]="projectSummary"></app-project-team>-->
+          </div>
+
+          <div class="col-md-4">
             <div class="panel panel-default">
               <div class="panel-body panel-custom">
+                <div *ngIf="projectSummary">
 
-                <h6><strong>TASKS</strong></h6>
-                <div class="separator"></div>
-                <h3>4/5</h3>
-                <div class="progress progress-striped active">
-                  <div class="progress-bar" [ngStyle]="{width: 4/4*100 + '%'}"></div>
+                  <h6><strong>{{projectSummary.projectName | uppercase}}</strong></h6>
+                  <div class="separator"></div>
+                  <table class="table table-bordered table-condensed table-hover">
+                    <tr>
+                      <td>Created By</td>
+                      <td align="right">{{projectSummary.createdBy}}</td>
+                    </tr>
+                    <tr>
+                      <td>Created On</td>
+                      <td align="right">{{projectSummary.createdOn | date:'medium'}}</td>
+                    </tr>
+
+                  </table>
+
                 </div>
-                <div class="separator"></div>
-                <a class="btn btn-primary btn-sm">View Tasks</a>
-
               </div>
             </div>
           </div>
-
-          <div class="col-md-6">
-            <div class="panel panel-default">
-              <div class="panel-body panel-custom">
-
-                <table class="table table-hover table-bordered table-condensed">
-                  <tr>
-                    <td><span data-tooltip="I’m the tooltip text.">I’m a link with a tooltip.</span></td>
-                    <td>a</td>
-                  </tr>
-                  <tr>
-                    <td>a</td>
-                    <td>a</td>
-                  </tr>
-                  <tr>
-                    <td>a</td>
-                    <td>a</td>
-                  </tr>
-                  <tr>
-                    <td>a</td>
-                    <td>a</td>
-                  </tr>
-                  <tr>
-                    <td>a</td>
-                    <td><span *ngIf="selectedProject">{{selectedProject.id}}</span></td>
-                  </tr>
-                </table>
-
-
-
-              </div>
-            </div>
-          </div>
-
-
         </div>
       </div>
     </div>
@@ -63,3 +42,8 @@
 
   </div>
 </div>
+
+
+
+
+<app-edit-project [projectSummary]="projectSummary"></app-edit-project>

@@ -14,33 +14,33 @@ div.progress {
 }
 
 div.progress.active .progress-bar {
--webkit-animation: progress-bar-stripes 500ms linear infinite;
--o-animation: progress-bar-stripes 500ms linear infinite;
-animation: progress-bar-stripes 500ms linear infinite;
-background-size: 20px 20px;
+  -webkit-animation: progress-bar-stripes 500ms linear infinite;
+  -o-animation: progress-bar-stripes 500ms linear infinite;
+  animation: progress-bar-stripes 500ms linear infinite;
+  background-size: 20px 20px;
 }
 
 @-webkit-keyframes progress-bar-stripes {
-from {
-background-position: 20px 0;
-}
-to {
-background-position: 0 0;
-}
+  from {
+    background-position: 20px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }
 @-o-keyframes progress-bar-stripes {
-from {
-background-position: 20px 0;
-}
-to {
-background-position: 0 0;
-}
+  from {
+    background-position: 20px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }
 @keyframes progress-bar-stripes {
-from {
-background-position: 20px 0;
-}
-to {
-background-position: 0 0;
-}
+  from {
+    background-position: 20px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }

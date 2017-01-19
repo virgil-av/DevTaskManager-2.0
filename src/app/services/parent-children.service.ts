@@ -30,6 +30,19 @@ export class ParentChildrenService {
   }
 
 
+  // send values from project component to child routes
+  // Observable string sources
+  private emmitValuesFromDashboard = new Subject<any>();
+
+  // Observable string streams
+  getValuesFromDashboard$ = this.emmitValuesFromDashboard.asObservable();
+
+  // Service message commands
+  sendDashboardValues(value: string[]) {
+    this.emmitValuesFromDashboard.next(value);
+  }
+
+
 
 
 

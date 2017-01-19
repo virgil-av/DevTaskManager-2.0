@@ -36,6 +36,9 @@ import { FilterToolbarComponent } from './components/project/tasks/filter-toolba
 import { FilterPipe } from './pipes/filter.pipe';
 import {TaskTestersComponent} from "./components/project/tasks/edit-task/add-testers/add-testers.component";
 import { TestingDetailsComponent } from './components/project/tasks/edit-task/testing-details/testing-details.component';
+import {TasksSummaryComponent} from './components/project/dashboard/tasks-sumarry/tasks-summary.component';
+import { ProjectTeamComponent } from './components/project/dashboard/project-team/project-team.component';
+import { EditProjectComponent } from './components/project/dashboard/edit-project/edit-project.component';
 
 
 export function AuthHttpFactory (http: Http, options: RequestOptions) {
@@ -70,6 +73,9 @@ export function AuthHttpFactory (http: Http, options: RequestOptions) {
     FilterToolbarComponent,
     FilterPipe,
     TestingDetailsComponent,
+    TasksSummaryComponent,
+    ProjectTeamComponent,
+    EditProjectComponent,
 
   ],
   imports: [

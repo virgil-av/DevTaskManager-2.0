@@ -4,9 +4,9 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
-        <div *ngIf="selectedProject">
-          <i class="fa fa-square-o fa-lg fa-margin" [ngStyle]="{color: selectedProject.colorId}"></i>
-          {{selectedProject.projectName | capitalize | substring:'20'}}
+        <div *ngIf="projectSummary">
+          <i class="fa fa-square-o fa-lg fa-margin" [ngStyle]="{color: projectSummary.colorId}"></i>
+          {{projectSummary.projectName | capitalize | substring:'20'}}
         </div>
       </li>
       <li>
@@ -28,23 +28,26 @@
   <div class="top-bar">
     <a (click)="toggleSideMenu()"class="btn btn-default btn-sm btn-black" ><i class="fa fa-bars fa-lg"></i></a>
 
-    <span *ngIf="selectedProject">
+    <span *ngIf="projectSummary">
 
-      <button *ngIf="router.isActive('/project/' + selectedProject.id + '/tasks')" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addTask">
+      <button *ngIf="router.isActive('/project/' + projectSummary.id + '/tasks')" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addTask">
       <i class="glyphicon glyphicon-plus"></i>
       Add Task
       </button>
 
-      <button *ngIf="router.isActive('/project/' + selectedProject.id + '/dashboard')" class="btn btn-info btn-sm">Edit</button>
+      <button *ngIf="router.isActive('/project/' + projectSummary.id + '/dashboard')"
+              class="btn btn-info btn-sm" data-toggle="modal" data-target="#editProject">Edit</button>
 
-      <button *ngIf="router.isActive('/project/' + selectedProject.id + '/dashboard')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteProject">Delete</button>
+      <button *ngIf="router.isActive('/project/' + projectSummary.id + '/dashboard')"
+              class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteProject">Delete</button>
 
-      <button (click)="getContacts()" *ngIf="router.isActive('/project/' + selectedProject.id + '/team')" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addToTeam">
+      <button (click)="getContacts()" *ngIf="router.isActive('/project/' + projectSummary.id + '/team')"
+              class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addToTeam">
       <i class="glyphicon glyphicon-plus"></i>
       Add From Contacts
       </button>
 
-      <button *ngIf="router.isActive('/project/' + selectedProject.id + '/categories')" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCategory">
+      <button *ngIf="router.isActive('/project/' + projectSummary.id + '/categories')" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCategory">
       <i class="glyphicon glyphicon-plus"></i>
       Add Category
       </button>

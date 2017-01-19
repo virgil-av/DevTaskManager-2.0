@@ -69,6 +69,13 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
+  updateProject(body: any, projectId: string){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.patch(dbSettings.dbUrl + dbSettings.dbProjects + '/' + projectId,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
   getAllProjects(){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbList)
       .map(response => response.json());

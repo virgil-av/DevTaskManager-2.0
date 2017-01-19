@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+  <div class="panel-body panel-custom">
+
+    <h6><strong>TEAM</strong></h6>
+    <div class="separator"></div>
+    <div *ngIf="!projectSummary">
+      <loading-spinner [visible]="true" [size]="'5x'"></loading-spinner>
+    </div>
+    <div *ngIf="projectSummary" class="panel-content">
+      <h3>{{projectSummary.projectTeam.length}}</h3>
+      <span *ngFor="let member of projectSummary.projectTeam">
+       <span [attr.data-tooltip]="member.name"><img *ngIf="contactsList" [src]="getProfilePic(member.name)" class="profile-image"></span>
+      </span>
+    </div>
+    <div class="separator"></div>
+    <a (click)="navigateTo()" class="btn btn-success btn-sm">View Team</a>
+
+  </div>
+</div>

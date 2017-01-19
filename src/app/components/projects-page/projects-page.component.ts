@@ -39,12 +39,12 @@ export class ProjectsPageComponent implements OnInit {
       "createdBy": this.auth.loggedUserName(),
       "team": [[{"name": this.auth.loggedUserName()}]],
       "tasks": formBuilder.array([])
-    })
+    });
   }
 
   ngOnInit() {
     this.db.getAllProjects().subscribe(response =>{
-        console.log(response)
+        console.log(response);
 
       this.allProjects = response;
       this.pcService.sendProjectsList(response);

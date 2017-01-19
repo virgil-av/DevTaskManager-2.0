@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ParentChildrenService} from "../../../services/parent-children.service";
-import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
+import {DatabaseService} from "../../../services/database.service";
+import {ActivatedRoute} from "@angular/router";
+
 
 @Component({
   selector: 'app-dashboard',
@@ -10,11 +11,26 @@ import {Router} from "@angular/router";
 })
 export class DashboardComponent implements OnInit{
 
+  projectSummary: any;
+  anyError: Error;
 
 
-  constructor(private pcService: ParentChildrenService) { }
+  constructor(private pcService: ParentChildrenService,
+              private activatedRoute: ActivatedRoute,
+              private db: DatabaseService) { }
+
 
   ngOnInit() {
+    this.activatedRoute.parent.params
+      .map(params => params['id'])
+      .subscribe((id) => {
+        this.db.getProjectSummary(id).subscribe(response =>{
+            this.projectSummary = response;
+            this.pcService.sendDashboardValues(response);
+          },
+          error => this.anyError = error
+        )
+      });
   }
 
 

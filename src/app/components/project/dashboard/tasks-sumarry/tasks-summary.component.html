@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+  <div class="panel-body panel-custom">
+
+    <h6><strong>TASKS</strong></h6>
+    <div class="separator"></div>
+    <div *ngIf="!projectSummary">
+      <loading-spinner [visible]="true" [size]="'5x'"></loading-spinner>
+    </div>
+
+    <div *ngIf="projectSummary" class="panel-content">
+
+      <h3>{{projectSummary.totalCompleted}}/{{projectSummary.totalTasks}}</h3>
+      <div class="progress">
+        <div class="progress-bar"
+             [ngStyle]="{width: calculatePercent()}">
+          {{calculatePercent()}}
+        </div>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <a (click)="navigateTo()" class="btn btn-primary btn-sm">View Tasks</a>
+
+  </div>
+</div>

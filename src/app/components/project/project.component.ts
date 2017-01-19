@@ -19,7 +19,7 @@ export class ProjectComponent implements OnInit {
 
   anyError: Error;
   sideMenuToggle: any;
-  selectedProject: any;
+  projectSummary: any;
 
   constructor(private db: DatabaseService,
               private pcService: ParentChildrenService,
@@ -28,17 +28,11 @@ export class ProjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.params
-      .map(params => params['id'])
-      .subscribe((id) => {
-        this.db.getProjectSummary(id).subscribe(response =>{
-            this.selectedProject = response;
-            console.log(response);
-          },
-          error => this.anyError = error
-        )
-      });
-
+    this.pcService.getValuesFromDashboard$.subscribe(projectSummary => {
+      this.projectSummary = projectSummary;
+    },
+      error => this.anyError = error
+    );
   }
 
 
@@ -47,18 +41,11 @@ export class ProjectComponent implements OnInit {
   }
 
   deleteProject(){
-    this.db.deleteProject(this.selectedProject.id)
+    this.db.deleteProject(this.projectSummary.id)
       .subscribe(() => {
         $('#deleteProject').modal('hide');
         this.router.navigate(['/projects']);
     })
   }
-
-
-  getContacts() {
-    this.pcService.callComponentMethod();
-  }
-
-
 
 }
