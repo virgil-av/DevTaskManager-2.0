@@ -1,9 +1,11 @@
 <div class="top-bar">
-<div class="row">
-  <div class="col-md-8"></div>
-  <div class="col-md-3">
-    <div class="input-group input-group-sm pull-right">
-      <input type="text" class="form-control" placeholder="Search for..." aria-describedby="sizing-addon3">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8"></div>
+    <div class="col-md-3">
+      <div class="input-group input-group-sm pull-right">
+        <input type="text" class="form-control" placeholder="Search for..." aria-describedby="sizing-addon3">
+      </div>
     </div>
   </div>
 </div>
@@ -16,7 +18,16 @@
     <div class="col-md-12">
       <div class="inner-page-wrapper">
 
-      <div class="well well-sm">Test</div>
+      <div *ngFor="let activity of activityList" class="well well-sm">
+        <span>
+          {{activity.who}} -&nbsp;
+        </span>
+
+        <span>{{activity.action}}</span>
+
+        <span class="pull-right">{{activity.date | date:'medium'}}</span>
+
+      </div>
 
       </div>
     </div>

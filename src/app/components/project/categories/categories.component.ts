@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {DatabaseService} from "../../../services/database.service";
 import {ActivatedRoute} from "@angular/router";
 import * as _ from 'lodash';
+import {Auth} from "../../../services/auth0.service";
 
 @Component({
   selector: 'app-categories',
@@ -19,7 +20,8 @@ export class CategoriesComponent implements OnInit {
 
   constructor(private db: DatabaseService,
               private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder ) {
+              private formBuilder: FormBuilder,
+              private auth: Auth ) {
 
     this.formAddToCategory = formBuilder.group({
       "name": ['',Validators.required, this.isDuplicateCategory.bind(this)],
@@ -65,17 +67,21 @@ export class CategoriesComponent implements OnInit {
       .subscribe(response =>{
           this.categoryList.push(response);
           this.formAddToCategory.reset({"name":'', "id": this.db.generateUniqueId()});
+
+          this.auth.activityLog('has added to project: "' + this.projectId + '" the category: ' + response.name );
         },
         error => this.anyError = error
       )
   }
 
-  removeCategory(categoryId: string) {
+  removeCategory(categoryId: string, categoryName: string) {
     this.db.deleteCategory(this.projectId, categoryId)
       .subscribe(() => {
           _.remove(this.categoryList, {
             "id": categoryId
           });
+
+          this.auth.activityLog('has deleted from project: "' + this.projectId + '" the category: ' + categoryName);
         },
         error => this.anyError = error
       )

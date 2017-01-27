@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {DatabaseService} from "../../../../services/database.service";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
+import {Auth} from "../../../../services/auth0.service";
 
 declare let $:any;
 
@@ -16,7 +17,8 @@ export class EditProjectComponent implements OnInit {
   isLoading: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-              private db: DatabaseService ) {
+              private db: DatabaseService,
+              private auth: Auth ) {
 
         this.formEditProject = formBuilder.group({
           // values will be populated via ngModel in html
@@ -32,12 +34,15 @@ export class EditProjectComponent implements OnInit {
 
   editProject(){
     this.isLoading = true;
-    console.log(this.formEditProject.value)
 
     this.db.updateProject(this.formEditProject.value,this.projectSummary.id)
       .subscribe(() =>{
       this.isLoading = false;
-        $('#editProject').modal('hide');
+
+      $('#editProject').modal('hide');
+
+      this.auth.activityLog('has edited project: ' + this.formEditProject.value.projectName);
+
       })
   }
 

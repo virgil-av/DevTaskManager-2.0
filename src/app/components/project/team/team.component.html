@@ -24,7 +24,7 @@
                 <button class="btn btn-xs btn-info btn-block">Get User Info</button>
               </td>
               <td>
-                <button *ngIf="member.id" (click)="removeFromTeam(member.id)" class="btn btn-xs btn-danger btn-block">Delete</button>
+                <button *ngIf="member.id" (click)="removeFromTeam(member.id,member.name)" class="btn btn-xs btn-danger btn-block">Delete</button>
               </td>
             </tr>
             </tbody>

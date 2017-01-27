@@ -49,6 +49,7 @@ export class AddTaskComponent implements OnInit {
     // resets the form after submission
     this.addTaskForm.reset({
       'id': this.db.generateUniqueId(),
+      'title': '',
       'status': 'New',
       'priority': 'Normal',
       'assignee': '',
@@ -66,6 +67,8 @@ export class AddTaskComponent implements OnInit {
       this.updateTasks.emit(response);
       this.isLoading = false;
       this.resetForm();
+
+      this.auth.activityLog('has added to project: "' + this.projectId + '" the task: ' + response.title );
 
       $('#addTask').modal('hide'); //closes modal window
     })

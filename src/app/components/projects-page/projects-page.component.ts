@@ -81,6 +81,8 @@ export class ProjectsPageComponent implements OnInit {
 
         $('#addProject').modal('hide'); //closes modal window on submission complete
 
+        this.auth.activityLog('has created the project: ' + response.projectName);
+
       },
       error => this.anyErrors = error
     );

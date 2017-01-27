@@ -1,0 +1,103 @@
+<div class="top-bar">
+  <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#addNote">
+    <i class="glyphicon glyphicon-plus"></i>
+    Add note
+  </button>
+</div>
+
+<div class="inner-page-wrapper">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div *ngFor="let note of userNotes" class="col-md-3">
+
+        <div class="panel" [ngClass]="{
+      'panel-default': note.style === 'default',
+      'panel-primary': note.style === 'primary',
+      'panel-danger': note.style === 'danger',
+      'panel-warning': note.style === 'warning',
+      'panel-success': note.style === 'success',
+      'panel-info': note.style === 'info'
+      }">
+          <div class="panel-heading">
+
+           <div *ngIf="isLoading && loadingState === 'delete'" class="row text-center">
+             <div class="loading-box center-spinner text-info">
+               <loading-spinner [visible]="isLoading" [size]="'5x'"></loading-spinner>
+             </div>
+           </div>
+
+           <div *ngIf="loadingState !== 'delete'">
+             <button (click)="deleteNote(note.note_id)" type="button" class="close">&times;</button>
+             <div>
+               {{note.content}}
+             </div>
+           </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isLoading && loadingState === 'default'" class="loading-box center-spinner text-info">
+        <loading-spinner [visible]="isLoading" [size]="'2x'"></loading-spinner>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+<!--ADD PROJECT MODAL-->
+
+<div class="modal fade" id="addNote" tabindex="-1" role="dialog" aria-labelledby="addNoteLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addNoteLabel">Add a Note</h4>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="formAddNote" (ngSubmit)="addNewNote()">
+
+          <div>
+            <div class="form-group" [class.has-error]="(formAddNote.controls.content.hasError('required') ||
+                                                       formAddNote.controls.content.hasError('maxLength')) &&
+                                                       formAddNote.controls.content.touched">
+              <label>Note:</label>
+              <textarea (keyup)="countTextarea()" class="form-control" formControlName="content"></textarea>
+              <span [class.text-danger]="countChars > 430">{{countChars}}</span>/430
+            </div>
+
+            <div class="form-group">
+              <label>Style:</label>
+              <select class="form-control" formControlName="style">
+                <option value="default" >Default</option>
+                <option value="primary" >Primary</option>
+                <option value="danger" >Danger</option>
+                <option value="warning" >Warning</option>
+                <option value="success" >Success</option>
+                <option value="info" >Info</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button [disabled]="formAddNote.invalid" (click)="addNewNote()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
+          <span *ngIf="isLoading === false">Add Note</span>
+          <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

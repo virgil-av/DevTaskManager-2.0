@@ -56,6 +56,8 @@ export class TaskDiscussionComponent implements OnInit{
           "edited": false
         });
 
+        this.auth.activityLog('has added a message to task: ' + this.task.title + ' project: "' + this.projectId + '"');
+
       },
       error => this.anyError = error
       );
@@ -68,6 +70,8 @@ export class TaskDiscussionComponent implements OnInit{
         _.remove(this.task.discussion,{
           id: response.messageId
         })
+
+        this.auth.activityLog('has removed a message from task: ' + this.task.title + ' project: "' + this.projectId + '"');
       })
   }
 

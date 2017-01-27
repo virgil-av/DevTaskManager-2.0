@@ -98,7 +98,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <button *ngIf="editTaskForm" [disabled]="editTaskForm.invalid" (click)="editTask()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
+      <button *ngIf="editTaskForm && displayState !== 'discussion'" [disabled]="editTaskForm.invalid" (click)="editTask()" type="button" class="btn" [ngClass]="{'btn-primary': isLoading === false,'btn-info': isLoading === true}">
         <span *ngIf="isLoading === false">Save changes</span>
         <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
       </button>

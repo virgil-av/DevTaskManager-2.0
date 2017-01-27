@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {authOptions} from "../dependencies/auth.options";
 import {myConfig} from "../dependencies/auth.config";
 import {Http, Headers} from "@angular/http";
+import {DatabaseService} from "./database.service";
 
 
 
@@ -21,7 +22,9 @@ export class Auth{
   userProfile: any;
 
 
-  constructor(private router: Router, private http: Http) {
+  constructor(private router: Router,
+              private http: Http,
+              private db: DatabaseService) {
 
 
     // Set userProfile attribute of already saved profile
@@ -44,12 +47,10 @@ export class Auth{
         this.userProfile = profile;
 
       });
-
-      if(this.loggedUserName()){
-
-      }
-
-      setTimeout(() => { this.router.navigate(['/projects']) }, 1500);
+      setTimeout(() => {
+        this.router.navigate(['/projects']);
+        this.activityLog('has logged in');
+      }, 1500);
     });
 
   };
@@ -67,23 +68,29 @@ export class Auth{
 
   public logout() {
     // Remove token and profile from localStorage
+    this.activityLog('has logged out');
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
-    // this.userProfile = undefined;
-    this.router.navigate(['/'])
+    this.router.navigate(['/login'])
   };
 
-  public isAdmin() {
+  isAdmin() {
     return this.userProfile && this.userProfile.roles.indexOf('admin') > -1;
   }
 
-  public loggedUserName(){
+  loggedUserName(){
     if(this.userProfile && this.userProfile.user_metadata && this.userProfile.user_metadata.name){
       return this.userProfile.user_metadata.name
     }
   }
 
-  public profilePic(){
+  loggedUserId(){
+    if(this.userProfile && this.userProfile.identities && this.userProfile.identities[0].user_id){
+      return this.userProfile.identities[0].user_id
+    }
+  }
+
+  profilePic(){
     if(this.userProfile && this.userProfile.user_metadata && this.userProfile.user_metadata.user_avatar){
       return this.userProfile.user_metadata.user_avatar
     }
@@ -121,5 +128,15 @@ export class Auth{
   }
 
 
+  activityLog(action: string){
+    // this function will track the activity from each action performed on the app
+    let activity = {
+      "who": this.loggedUserName(),
+      "action": action,
+      "date": new Date()
+    };
+
+    this.db.addToActivity(activity).subscribe();
+  }
 
 }

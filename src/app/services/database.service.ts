@@ -76,6 +76,21 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
+  addToActivity(body: any){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbActivity,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
+  createUserNote(body: any){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post(dbSettings.dbUrl + dbSettings.dbNotes,JSON.stringify(body),{headers:headers})
+      .map(response => response.json());
+  }
+
+
   getAllProjects(){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbList)
       .map(response => response.json());
@@ -99,6 +114,16 @@ export class DatabaseService {
 
   getProjectCategories(ProjectId: string){
     return this.http.get(dbSettings.dbUrl + dbSettings.dbProjects + '/' + ProjectId + '/categories')
+      .map(response => response.json());
+  }
+
+  getActivity(){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbActivity)
+      .map(response => response.json());
+  }
+
+  getUserNotes(userId: string){
+    return this.http.get(dbSettings.dbUrl + dbSettings.dbNotes + '/' + userId)
       .map(response => response.json());
   }
 
@@ -133,14 +158,18 @@ export class DatabaseService {
       .map(response => response.json());
   }
 
-
-
-  generateUniqueId(){
-    return uniqid() + 'av' + (Math.floor((Math.random() * 10000000) + 1)).toString(16);
+  deleteNote(noteId: string){
+    return this.http.delete(dbSettings.dbUrl + dbSettings.dbNotes + '/' + noteId)
+      .map(response => response.json());
   }
 
 
 
+  generateUniqueId(){
+    // this function generates an unique id based on npm uniqip + Math.random
+    // this ensures an unique id even if multiple user perform an action at the exact same time
+    return uniqid() + 'av' + (Math.floor((Math.random() * 10000000) + 1)).toString(16);
+  }
 
 
 }

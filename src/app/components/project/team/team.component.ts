@@ -77,17 +77,21 @@ export class TeamComponent implements OnInit {
       .subscribe(response =>{
           this.teamList.push(response);
           this.formAddToTeam.reset({"name":'', "id": this.db.generateUniqueId()});
+
+          this.auth.activityLog('has added to project: "' + this.projectId + '" the user: ' + response.name );
       },
         error => this.anyError = error
       )
   }
 
-  removeFromTeam(memberId: string){
+  removeFromTeam(memberId: string, memberName: string){
     this.db.deleteTeamMember(this.projectId,memberId)
       .subscribe(() =>{
           _.remove(this.teamList, {
             "id": memberId
           });
+
+          this.auth.activityLog('has deleted from project: "' + this.projectId + '" the user: ' + memberName);
         },
         error => this.anyError = error
       )

@@ -3,6 +3,7 @@ import {FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {DatabaseService} from "../../../../services/database.service";
 import {TaskSettings} from "../../../../dependencies/task.settings";
 import * as _ from "lodash";
+import {Auth} from "../../../../services/auth0.service";
 
 declare let $: any;
 
@@ -24,7 +25,9 @@ export class EditTaskComponent implements OnInit, OnChanges {
   @Input() selectedTask: any;
   @Output() updateTasks: EventEmitter<any> = new EventEmitter;
 
-  constructor(private db: DatabaseService, private formBuilder: FormBuilder) {
+  constructor(private db: DatabaseService,
+              private formBuilder: FormBuilder,
+              private auth: Auth) {
 
   }
 
@@ -60,6 +63,8 @@ export class EditTaskComponent implements OnInit, OnChanges {
         this.updateTasks.emit(this.editTaskForm.value);
         this.isLoading = false;
         $('#editTask').modal('hide');
+
+        this.auth.activityLog('has edited from project: "' + this.projectId + '" the task: ' + this.editTaskForm.value.title);
       })
 
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DatabaseService} from "../../services/database.service";
 
 @Component({
   selector: 'app-activity-page',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityPageComponent implements OnInit {
 
-  constructor() { }
+  activityList: any[] = [];
+
+  constructor(private db: DatabaseService) { }
 
   ngOnInit() {
+    this.db.getActivity().subscribe(activity => {
+
+      this.activityList = activity;
+    })
   }
 
 }

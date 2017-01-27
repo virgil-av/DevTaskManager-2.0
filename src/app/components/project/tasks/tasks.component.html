@@ -198,7 +198,7 @@
         <strong class="text-danger">Are you sure you want to delete this task?</strong>
       </div>
       <div class="modal-footer">
-        <button (click)="deleteTask(selectedTask.id)" type="button" class="btn" [ngClass]="{'btn-danger': isLoading === false,'btn-info': isLoading === true}">
+        <button (click)="deleteTask(selectedTask.id,selectedTask.title)" type="button" class="btn" [ngClass]="{'btn-danger': isLoading === false,'btn-info': isLoading === true}">
           <span *ngIf="isLoading === false">Yes</span>
           <span class="button-minwidth"><loading-spinner [visible]="isLoading"></loading-spinner></span>
         </button>

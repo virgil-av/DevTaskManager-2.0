@@ -83,7 +83,7 @@ export class TasksComponent implements OnInit {
     _.merge(task, value);
   }
 
-  deleteTask(id){
+  deleteTask(id: string, title: string){
     this.isLoading = true;
     this.db.deleteTask(this.projectId, id).subscribe(() => {
       _.remove(this.tasks,{
@@ -91,7 +91,10 @@ export class TasksComponent implements OnInit {
       });
         this.isLoading = false;
         this.isTasksEmpty = _.isEmpty(this.tasks);
+
         $('#deleteTask').modal('hide');
+
+        this.auth.activityLog('has deleted from project: "' + this.projectId + '" the task: ' + title);
     },
     error => this.anyError = error
     );

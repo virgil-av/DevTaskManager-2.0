@@ -1,0 +1,100 @@
+<div class="top-bar"></div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <div class="row">
+            <div class="col-md-5">
+              <span><img [src]="userAvatar" class="profile-image"></span>
+            </div>
+            <div class="col-md-7">
+
+              <form [formGroup]="editProfileForm" (ngSubmit)="updateUser()">
+
+                <div class="form-group input-group-sm"
+                     [class.has-error]="editProfileForm.controls.name.hasError('required')">
+                  <label>Name:</label>
+                  <input type="text" [(ngModel)]="userName" class="form-control"
+                         formControlName="name" placeholder="First and Last name...">
+                  <span class="text-danger" *ngIf="editProfileForm.controls.name.hasError('required')">
+                    User Name can not be empty!
+                  </span>
+                </div>
+
+
+                <div class="form-group input-group-sm"
+                     [class.has-error]="editProfileForm.controls.userAvatar.hasError('required') ||
+                                        editProfileForm.controls.userAvatar.hasError('noAvatar')">
+                  <label>Profile Picture:</label>
+                  <input type="text" [(ngModel)]="userAvatar" class="form-control" formControlName="userAvatar">
+                  <span class="text-danger" *ngIf="editProfileForm.controls.userAvatar.hasError('required') ||
+                                                    editProfileForm.controls.userAvatar.hasError('noAvatar')">
+                    Invalid image Url!
+                  </span>
+                </div>
+
+              </form>
+              <div class="row">
+                <div class="col-md-12">
+                  <span class="pull-right">
+                    <button (click)="resetForm()" class="btn btn-default">Reset</button>
+                <button (click)="updateUser()" [disabled]="editProfileForm.invalid" type="button" class="btn"
+                        [ngClass]="{'btn-success': isLoading === false || (isLoading === true && loadingState !== 'profile'),
+                                    'btn-info': isLoading === true && loadingState === 'profile'}">
+                  <span *ngIf="isLoading === false || (isLoading === true && loadingState !== 'profile')">Save</span>
+                  <span class="button-minwidth"><loading-spinner [visible]="isLoading && loadingState === 'profile'"></loading-spinner></span>
+                </button>
+                  </span>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <form [formGroup]="editPasswordForm" (ngSubmit)="updateUser()">
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group input-group-sm"
+                             [class.has-error]="editPasswordForm.controls.password.hasError('required') &&
+                                            editPasswordForm.controls.password.touched">
+                          <label>Password:</label>
+                          <input type="password" class="form-control" formControlName="password">
+                        </div>
+                      </div>
+                      <div class="col-md-6 input-group-sm">
+                        <div class="form-group input-group-sm"
+                             [class.has-error]="(editPasswordForm.controls.repeatPassword.hasError('required') &&
+                                            editPasswordForm.controls.repeatPassword.touched) ||
+                                            editPasswordForm.controls.repeatPassword.hasError('passwordsNotMatch')">
+                          <label>Repeat Password:</label>
+                          <input type="password" class="form-control" formControlName="repeatPassword">
+                          <span class="text-danger"  *ngIf="editPasswordForm.controls.repeatPassword.hasError('passwordsNotMatch')">
+                    Passwords do not match!
+                  </span>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <button (click)="updatePassword()" [disabled]="editPasswordForm.invalid" type="button" class="btn pull-right"
+                          [ngClass]="{'btn-primary': isLoading === false || (isLoading === true && loadingState !== 'password'),
+                                      'btn-info': isLoading === true && loadingState === 'password'}">
+                    <span *ngIf="isLoading === false || (isLoading === true && loadingState !== 'password')">Save</span>
+                    <span class="button-minwidth"><loading-spinner [visible]="isLoading && loadingState === 'password'"></loading-spinner></span>
+                  </button>
+                </div>
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>

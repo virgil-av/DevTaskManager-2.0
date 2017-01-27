@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" routerLink="/projects">DevTask 2</a>
+      <a class="navbar-brand" routerLink="/projects">DevTask 2 <span class="text-warning">beta</span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -24,8 +24,11 @@
           <ul class="dropdown-menu" *ngIf="listOfProjects">
             <li><a routerLink="/project">Project</a></li>
             <li routerLinkActive="active"><a routerLink="/projects"><i class="fa fa-square-o fa-lg"></i>&nbsp;All Projects</a></li>
-            <li *ngFor="let p of listOfProjects"><a routerLink="/project/{{p.id}}/dashboard"><i class="fa fa-square fa-lg" [ngStyle]="{color: p.colorId}"></i>&nbsp;{{p.projectName
-              | capitalize}}</a></li>
+            <li routerLinkActive="active" *ngFor="let p of listOfProjects">
+              <a routerLink="/project/{{p.id}}/dashboard">
+                <i class="fa fa-square fa-lg" [ngStyle]="{color: p.colorId}"></i>&nbsp;{{p.projectName | capitalize}}
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -40,12 +43,12 @@
             <span *ngIf="!auth.loggedUserName()"> Loading info...</span>
             <span *ngIf="auth.loggedUserName()">
               <span *ngIf="!auth.profilePic()"><img src="assets/images/profile.png" class="profile-image"></span>
-              <span *ngIf="auth.profilePic()"><img src="{{auth.userProfile.user_metadata.user_avatar}}" class="profile-image"></span>
+              <span><img [src]="auth.profilePic()" class="profile-image"></span>
               {{auth.userProfile.user_metadata.name}}</span>
             <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a>Profile</a></li>
-            <li><a>My Notes</a></li>
+            <li routerLinkActive="active"><a routerLink="/profile">My Profile</a></li>
+            <li routerLinkActive="active"><a routerLink="/notes">My Notes</a></li>
             <li role="separator" class="divider"></li>
             <li><a (click)="auth.logout()">Logout</a></li>
           </ul>
