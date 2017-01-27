@@ -1,5 +1,15 @@
 # DevTaskManager
 
+##Live demo
+https://virgil-av.github.io/DevTaskManager-2.0 
+
+admin@test.com 
+Test123
+
+for users
+test@test.com, test2@test.com,test3@test.com
+Test123
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.24.
 
 ## Development server
